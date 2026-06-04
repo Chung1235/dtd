@@ -908,7 +908,7 @@ const lectures = [
   {
     id:1, week:"1주차 [6월03일 - 6월09일]",
     title:"AI 활용 디자인",
-    speaker:"정수연 Creater",
+    speaker:"정수연 Creativity Sparker",
     date:"2026-06-10 16:00", place:"생활과학관 201호",
     status:"신청 가능", count:"42 / 60",
     desc:"AI 시대에 디자이너가 도구를 해석하고 자신의 작업 언어를 만드는 방법을 실습 중심으로 다룹니다.",
@@ -1533,17 +1533,29 @@ function renderCalendar(){
 }
 
 function renderTemplate(){
+  const l = lectureById(1);
+  const p = posterMeta[l.id] || posterMeta[1];
+  const career = {
+    1:"스마일게이트 퓨처랩 및 아트센터 나비 창작 워크숍 운영",
+    2:"브랜드 리뉴얼, 공간 경험 설계, 전시 아이덴티티 구축 프로젝트 총괄",
+    3:"IT 플랫폼 프로덕트 기획, UX 정책 문서화, 데이터 기반 기능 개선 프로젝트 리드"
+  }[l.id];
+  const field = {
+    1:"AI 디자인 / 창작 워크플로우 / 실무 도구 활용",
+    2:"브랜드 경험 / BX 디자인 / 포트폴리오 구조화",
+    3:"서비스 기획 / UX·UI 협업 / 산출물 커뮤니케이션"
+  }[l.id];
   return `${crumb("특강 공지 작성")}
   <h1 class="page-title">특강 공지 작성</h1>
   <div class="content-box" style="padding:0">
     <dl class="form-grid">
-      <label>특강 제목</label><div class="field"><input value="AI 활용 디자인: What's Your Vibe?"></div>
-      <label>연사</label><div class="field"><input value="정수연 Creativity Sparker"></div>
-      <label>연사 경력</label><div class="field"><input value="스마일게이트 퓨처랩 및 아트센터 나비 창작 워크숍 운영"></div>
-      <label>관련 분야</label><div class="field"><input value="AI 디자인 / 창작 워크플로우 / 실무 도구 활용"></div>
-      <label>일시</label><div class="field"><input value="2026-06-10 16:00"></div>
-      <label>장소</label><div class="field"><input value="생활과학관 201호"></div>
-      <label>내용</label><div class="field"><textarea>AI 시대에 디자이너가 도구를 해석하고 자신의 작업 언어를 만드는 방법을 실습 중심으로 다룹니다.</textarea></div>
+      <label>특강 제목</label><div class="field"><input value="${l.title}: ${p.subtitle}"></div>
+      <label>연사</label><div class="field"><input value="${l.speaker}"></div>
+      <label>연사 경력</label><div class="field"><input value="${career}"></div>
+      <label>관련 분야</label><div class="field"><input value="${field}"></div>
+      <label>일시</label><div class="field"><input value="${l.date}"></div>
+      <label>장소</label><div class="field"><input value="${l.place}"></div>
+      <label>내용</label><div class="field"><textarea>${l.desc}</textarea></div>
       <label>추천 대상</label><div class="field"><textarea>AI 도구를 디자인 과정에 적용해보고 싶거나, 자신만의 창작 워크플로우를 정리하고 싶은 학생</textarea></div>
     </dl>
     <div class="right-actions">
@@ -1587,82 +1599,147 @@ function renderAdmin(){
 }
 
 
-function getPosterSVG(id){
-  const posters = {
-    1:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+const posterMeta = {
+  1:{
+    variant:"ai",
+    titleLines:["AI시대","디자이너의","역할"],
+    subtitle:"What's Your Vibe?",
+    affiliation:"Smilegate Future Lab / Art Center Nabi",
+    keyHeading:"KEY POINT",
+    bullets:["AI 도구와 디자이너의 판단 기준","창작 워크플로우 실습","나만의 작업 언어 찾기"]
+  },
+  2:{
+    variant:"brand",
+    titleLines:["경험 설계와","포트폴리오"],
+    subtitle:"BX Portfolio Strategy",
+    label:"BRAND",
+    affiliation:"브랜드 리뉴얼 · 공간 경험 · 전시 아이덴티티",
+    keyHeading:"이런 학생에게 추천",
+    bullets:["브랜드 프로젝트 정리가 어려운 학생","포트폴리오 스토리라인이 필요한 학생"]
+  },
+  3:{
+    variant:"service",
+    titleLines:["서비스 기획자와","디자이너의","협업 방식"],
+    subtitle:"Product Planning · UX Policy · Data Review",
+    keyHeading:"사후 자료 공개 완료",
+    bullets:["요구사항 정리와 화면 설계 산출물","기획자-디자이너 커뮤니케이션 방식"]
+  }
+};
+
+function svgText(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function formatPosterDate(dateString){
+  const d = new Date(String(dateString).replace(" ","T"));
+  if(Number.isNaN(d.getTime())) return svgText(dateString);
+  const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,"0");
+  const dd = String(d.getDate()).padStart(2,"0");
+  const hh = String(d.getHours()).padStart(2,"0");
+  const min = String(d.getMinutes()).padStart(2,"0");
+  return `${yyyy}.${mm}.${dd} ${days[d.getDay()]} ${hh}:${min}`;
+}
+
+function getLecturePosterData(lectureOrId){
+  const l = typeof lectureOrId === "object" ? lectureOrId : lectureById(lectureOrId);
+  const lecture = l || lectures[0];
+  const meta = posterMeta[lecture.id] || posterMeta[1];
+  return { lecture, meta };
+}
+
+function getPosterSVG(lectureOrId){
+  const { lecture:l, meta:p } = getLecturePosterData(lectureOrId);
+  const speaker = svgText(l.speaker);
+  const place = svgText(l.place);
+  const date = svgText(formatPosterDate(l.date));
+  const affiliation = svgText(p.affiliation || "");
+  const subtitle = svgText(p.subtitle || "");
+  const keyHeading = svgText(p.keyHeading || "KEY POINT");
+  const bullets = (p.bullets || []).map(svgText);
+
+  if(p.variant === "brand"){
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
       <defs>
-        <linearGradient id="aiBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#180b3d"/><stop offset="55%" stop-color="#4c1d95"/><stop offset="100%" stop-color="#111827"/></linearGradient>
-        <linearGradient id="aiTx" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+        <linearGradient id="brBg${l.id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b0764"/><stop offset="52%" stop-color="#be185d"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
+        <linearGradient id="brSoft${l.id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fce7f3"/></linearGradient>
       </defs>
-      <rect width="400" height="560" fill="url(#aiBg)"/>
-      <circle cx="330" cy="80" r="90" fill="#7c3aed" opacity=".28"/>
-      <circle cx="70" cy="360" r="120" fill="#2563eb" opacity=".16"/>
-      <path d="M35 260 C120 190, 240 330, 370 245" stroke="#a78bfa" stroke-width="3" fill="none" opacity=".65"/>
-      <text x="28" y="72" font-size="34" font-weight="900" fill="url(#aiTx)">AI시대</text>
-      <text x="28" y="113" font-size="30" font-weight="900" fill="url(#aiTx)">디자이너의</text>
-      <text x="28" y="154" font-size="34" font-weight="900" fill="url(#aiTx)">역할</text>
-      <text x="28" y="190" font-size="15" font-weight="700" fill="#e9d5ff">What's Your Vibe?</text>
-      <line x1="28" y1="230" x2="372" y2="230" stroke="#c4b5fd" opacity=".28"/>
-      <text x="28" y="270" font-size="15" fill="#ddd6fe">정수연 Creativity Sparker</text>
-      <text x="28" y="294" font-size="12" fill="#c4b5fd">Smilegate Future Lab / Art Center Nabi</text>
-      <text x="28" y="350" font-size="13" font-weight="700" fill="#93c5fd">KEY POINT</text>
-      <text x="28" y="378" font-size="12" fill="#ddd6fe">• AI 도구와 디자이너의 판단 기준</text>
-      <text x="28" y="400" font-size="12" fill="#ddd6fe">• 창작 워크플로우 실습</text>
-      <text x="28" y="422" font-size="12" fill="#ddd6fe">• 나만의 작업 언어 찾기</text>
-      <text x="28" y="506" font-size="14" font-weight="800" fill="#fff">2026.06.10 WED 16:00</text>
-      <text x="28" y="530" font-size="12" fill="#c4b5fd">생활과학관 201호</text>
-    </svg>`,
-    2:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
-      <defs>
-        <linearGradient id="brBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b0764"/><stop offset="52%" stop-color="#be185d"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
-        <linearGradient id="brSoft" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fce7f3"/></linearGradient>
-      </defs>
-      <rect width="400" height="560" fill="url(#brBg)"/>
+      <rect width="400" height="560" fill="url(#brBg${l.id})"/>
       <rect x="34" y="36" width="332" height="488" rx="18" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.28)"/>
       <circle cx="305" cy="138" r="64" fill="#fbbf24" opacity=".35"/>
       <circle cx="82" cy="420" r="88" fill="#f9a8d4" opacity=".22"/>
-      <text x="54" y="98" font-size="23" font-weight="900" fill="url(#brSoft)">BRAND</text>
-      <text x="54" y="136" font-size="35" font-weight="900" fill="#fff">경험 설계와</text>
-      <text x="54" y="179" font-size="31" font-weight="900" fill="#fff">포트폴리오</text>
-      <text x="54" y="214" font-size="16" font-weight="700" fill="#ffedd5">BX Portfolio Strategy</text>
+      <text x="54" y="98" font-size="23" font-weight="900" fill="url(#brSoft${l.id})">${svgText(p.label || "BRAND")}</text>
+      <text x="54" y="136" font-size="35" font-weight="900" fill="#fff">${svgText(p.titleLines[0] || l.title)}</text>
+      <text x="54" y="179" font-size="31" font-weight="900" fill="#fff">${svgText(p.titleLines[1] || "")}</text>
+      <text x="54" y="214" font-size="16" font-weight="700" fill="#ffedd5">${subtitle}</text>
       <line x1="54" y1="258" x2="346" y2="258" stroke="rgba(255,255,255,.28)"/>
-      <text x="54" y="298" font-size="15" fill="#fff7ed">박서윤 BX 크리에이티브 디렉터</text>
-      <text x="54" y="324" font-size="12" fill="#fed7aa">브랜드 리뉴얼 · 공간 경험 · 전시 아이덴티티</text>
-      <text x="54" y="378" font-size="13" font-weight="800" fill="#fff7ed">이런 학생에게 추천</text>
-      <text x="54" y="406" font-size="12" fill="#ffedd5">• 브랜드 프로젝트 정리가 어려운 학생</text>
-      <text x="54" y="428" font-size="12" fill="#ffedd5">• 포트폴리오 스토리라인이 필요한 학생</text>
-      <text x="54" y="505" font-size="14" font-weight="800" fill="#fff">2026.06.17 WED 14:00</text>
-      <text x="54" y="530" font-size="12" fill="#ffedd5">생활과학관 301호</text>
-    </svg>`,
-    3:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+      <text x="54" y="298" font-size="15" fill="#fff7ed">${speaker}</text>
+      <text x="54" y="324" font-size="12" fill="#fed7aa">${affiliation}</text>
+      <text x="54" y="378" font-size="13" font-weight="800" fill="#fff7ed">${keyHeading}</text>
+      ${bullets.map((b,i)=>`<text x="54" y="${406+i*22}" font-size="12" fill="#ffedd5">• ${b}</text>`).join("\n      ")}
+      <text x="54" y="505" font-size="14" font-weight="800" fill="#fff">${date}</text>
+      <text x="54" y="530" font-size="12" fill="#ffedd5">${place}</text>
+    </svg>`;
+  }
+
+  if(p.variant === "service"){
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
       <defs>
-        <linearGradient id="svBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#052e2b"/><stop offset="55%" stop-color="#0f766e"/><stop offset="100%" stop-color="#134e4a"/></linearGradient>
+        <linearGradient id="svBg${l.id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#052e2b"/><stop offset="55%" stop-color="#0f766e"/><stop offset="100%" stop-color="#134e4a"/></linearGradient>
       </defs>
-      <rect width="400" height="560" fill="url(#svBg)"/>
+      <rect width="400" height="560" fill="url(#svBg${l.id})"/>
       <path d="M0 128 H400" stroke="#5eead4" stroke-width="2" opacity=".25"/>
       <path d="M0 266 H400" stroke="#5eead4" stroke-width="2" opacity=".18"/>
       <path d="M0 404 H400" stroke="#5eead4" stroke-width="2" opacity=".18"/>
       <rect x="44" y="64" width="312" height="150" rx="16" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)"/>
-      <text x="64" y="112" font-size="30" font-weight="900" fill="#ccfbf1">서비스 기획자와</text>
-      <text x="64" y="154" font-size="30" font-weight="900" fill="#ccfbf1">디자이너의</text>
-      <text x="64" y="196" font-size="34" font-weight="900" fill="#99f6e4">협업 방식</text>
-      <text x="44" y="266" font-size="15" fill="#ccfbf1">김도현 IT 플랫폼 서비스 기획자</text>
-      <text x="44" y="292" font-size="12" fill="#99f6e4">Product Planning · UX Policy · Data Review</text>
+      <text x="64" y="112" font-size="30" font-weight="900" fill="#ccfbf1">${svgText(p.titleLines[0] || l.title)}</text>
+      <text x="64" y="154" font-size="30" font-weight="900" fill="#ccfbf1">${svgText(p.titleLines[1] || "")}</text>
+      <text x="64" y="196" font-size="34" font-weight="900" fill="#99f6e4">${svgText(p.titleLines[2] || "")}</text>
+      <text x="44" y="266" font-size="15" fill="#ccfbf1">${speaker}</text>
+      <text x="44" y="292" font-size="12" fill="#99f6e4">${subtitle}</text>
       <circle cx="92" cy="368" r="28" fill="#99f6e4" opacity=".75"/>
       <circle cx="200" cy="368" r="28" fill="#5eead4" opacity=".55"/>
       <circle cx="308" cy="368" r="28" fill="#2dd4bf" opacity=".45"/>
       <line x1="120" y1="368" x2="172" y2="368" stroke="#ccfbf1" stroke-width="3" opacity=".8"/>
       <line x1="228" y1="368" x2="280" y2="368" stroke="#ccfbf1" stroke-width="3" opacity=".8"/>
-      <text x="44" y="438" font-size="13" font-weight="800" fill="#ccfbf1">사후 자료 공개 완료</text>
-      <text x="44" y="466" font-size="12" fill="#ccfbf1">• 요구사항 정리와 화면 설계 산출물</text>
-      <text x="44" y="488" font-size="12" fill="#ccfbf1">• 기획자-디자이너 커뮤니케이션 방식</text>
-      <text x="44" y="526" font-size="14" font-weight="800" fill="#fff">2026.05.22 FRI 14:00</text>
-    </svg>`
-  };
-  return posters[id] || posters[1];
+      <text x="44" y="438" font-size="13" font-weight="800" fill="#ccfbf1">${keyHeading}</text>
+      ${bullets.map((b,i)=>`<text x="44" y="${466+i*22}" font-size="12" fill="#ccfbf1">• ${b}</text>`).join("\n      ")}
+      <text x="44" y="526" font-size="14" font-weight="800" fill="#fff">${date}</text>
+      <text x="44" y="548" font-size="12" fill="#ccfbf1">${place}</text>
+    </svg>`;
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+      <defs>
+        <linearGradient id="aiBg${l.id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#180b3d"/><stop offset="55%" stop-color="#4c1d95"/><stop offset="100%" stop-color="#111827"/></linearGradient>
+        <linearGradient id="aiTx${l.id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+      </defs>
+      <rect width="400" height="560" fill="url(#aiBg${l.id})"/>
+      <circle cx="330" cy="80" r="90" fill="#7c3aed" opacity=".28"/>
+      <circle cx="70" cy="360" r="120" fill="#2563eb" opacity=".16"/>
+      <path d="M35 260 C120 190, 240 330, 370 245" stroke="#a78bfa" stroke-width="3" fill="none" opacity=".65"/>
+      <text x="28" y="72" font-size="34" font-weight="900" fill="url(#aiTx${l.id})">${svgText(p.titleLines[0] || l.title)}</text>
+      <text x="28" y="113" font-size="30" font-weight="900" fill="url(#aiTx${l.id})">${svgText(p.titleLines[1] || "")}</text>
+      <text x="28" y="154" font-size="34" font-weight="900" fill="url(#aiTx${l.id})">${svgText(p.titleLines[2] || "")}</text>
+      <text x="28" y="190" font-size="15" font-weight="700" fill="#e9d5ff">${subtitle}</text>
+      <line x1="28" y1="230" x2="372" y2="230" stroke="#c4b5fd" opacity=".28"/>
+      <text x="28" y="270" font-size="15" fill="#ddd6fe">${speaker}</text>
+      <text x="28" y="294" font-size="12" fill="#c4b5fd">${affiliation}</text>
+      <text x="28" y="350" font-size="13" font-weight="700" fill="#93c5fd">${keyHeading}</text>
+      ${bullets.map((b,i)=>`<text x="28" y="${378+i*22}" font-size="12" fill="#ddd6fe">• ${b}</text>`).join("\n      ")}
+      <text x="28" y="506" font-size="14" font-weight="800" fill="#fff">${date}</text>
+      <text x="28" y="530" font-size="12" fill="#c4b5fd">${place}</text>
+    </svg>`;
 }
+
 function getPosterSmall(l){
-  return '<div style="width:108px;min-height:148px;overflow:hidden;border-radius:6px;flex-shrink:0;box-shadow:0 2px 7px rgba(30,50,80,.10)">'+getPosterSVG(l.id)+'</div>';
+  return '<div style="width:108px;min-height:148px;overflow:hidden;border-radius:6px;flex-shrink:0;box-shadow:0 2px 7px rgba(30,50,80,.10)">'+getPosterSVG(l)+'</div>';
 }
 
 function render(){
