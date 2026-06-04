@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnUs Yonsei — 통합디자인학과 진로 특강 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:#f5f6f8;color:#333;font-size:13px;min-height:100vh}
+
+/* ══ PAGE SYSTEM ══ */
+.page{display:none}
+.page.active{display:block}
+
+/* ── TOP BAR ── */
+.topbar{background:#1c3d6e;height:34px;display:flex;align-items:center;padding:0 20px}
+.topbar-links{display:flex;align-items:center}
+.topbar-links a{color:#b0c2de;font-size:12px;text-decoration:none;padding:0 13px;border-right:1px solid rgba(255,255,255,.18);line-height:34px;cursor:pointer}
+.topbar-links a:first-child{padding-left:0}
+.topbar-links a:hover{color:#fff}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lang-pill{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);color:#d0ddf0;font-size:11.5px;font-family:inherit;padding:2px 9px;border-radius:3px;cursor:pointer}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#4a7fc1;border:2px solid #6a9fd4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;position:relative}
+.notif-dot{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#e84040;color:#fff;font-size:8.5px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #1c3d6e}
+.topbar-user{color:#d5e2f5;font-size:12px}
+.topbar-logout{color:#b0c2de;font-size:12px;cursor:pointer}
+.topbar-logout:hover{color:#fff}
+
+/* ── MAIN HEADER ── */
+.mheader{background:#fff;height:62px;display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #dde1e8}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;margin-right:auto}
+.logo-bars{display:flex;align-items:flex-end;gap:2.5px}
+.lbar{width:4.5px;border-radius:1.5px;background:#2b6cd4}
+.logo-text{font-size:22px;font-weight:700;color:#2b6cd4;letter-spacing:-0.4px;line-height:1}
+.logo-sub{font-size:9px;letter-spacing:2px;color:#aaa;font-weight:400;align-self:flex-end;margin-bottom:2px;margin-left:1px}
+.mnav{display:flex}
+.mnav a{font-size:14.5px;font-weight:500;color:#555;text-decoration:none;padding:0 26px;height:62px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:color .13s;white-space:nowrap;cursor:pointer}
+.mnav a:hover{color:#2b6cd4}
+.mnav a.active{color:#2b6cd4;border-bottom-color:#2b6cd4}
+
+/* ── DASHBOARD ── */
+.dash-body{display:flex;min-height:calc(100vh - 96px)}
+.dash-main{flex:1;min-width:0;padding:26px 26px}
+.dash-sidebar{width:310px;flex-shrink:0;background:#fff;border-left:1px solid #dde1e8;padding:22px 18px;display:flex;flex-direction:column;gap:22px}
+
+/* course list */
+.dash-header{display:flex;align-items:center;margin-bottom:16px}
+.dash-header h1{font-size:20px;font-weight:700;color:#222}
+.dash-btns{display:flex;gap:7px;margin-left:auto}
+.dbtn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-family:inherit;padding:6px 13px;border:1px solid #cdd2db;border-radius:4px;background:#fff;color:#555;cursor:pointer}
+.dbtn:hover{background:#f2f4f8}
+.clist{background:#fff;border:1px solid #dde1e8;border-radius:6px;overflow:hidden;margin-bottom:22px}
+.crow{display:flex;align-items:center;padding:15px 18px;gap:13px;border-bottom:1px solid #f0f2f5;cursor:pointer;transition:background .1s}
+.crow:last-child{border-bottom:none}
+.crow:hover{background:#f9fafd}
+.crow.highlight{background:#fafcff;border-left:3px solid #2b6cd4}
+.crow.highlight:hover{background:#f0f5ff}
+.badge-col{display:flex;flex-direction:column;gap:3px;width:44px;flex-shrink:0;align-items:center}
+.cbadge{font-size:11px;font-weight:700;text-align:center;color:#fff;padding:3px 0;border-radius:3px;width:44px;display:block}
+.cb-kyo{background:#5c8fe8}
+.cb-hak{background:#2b6cd4}
+.cb-bik{background:#7b56cc}
+.cb-special{background:#e85c2b}
+.cmeta{flex:1;min-width:0}
+.cname{font-size:14px;font-weight:600;color:#1f1f1f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.cname .sem{font-size:12.5px;font-weight:400;color:#888}
+.ntag{color:#e84040;font-size:12.5px;font-weight:700;margin-left:7px}
+.csub{font-size:12px;color:#999}
+.cright{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.prog{display:flex;align-items:center;gap:5px}
+.prog-lbl{font-size:12.5px;color:#888}
+.prog-val{font-size:13px;font-weight:700;color:#e84040}
+.abtn{font-size:12.5px;padding:4px 12px;border:1px solid #cdd2db;border-radius:4px;background:#fff;color:#555;cursor:pointer;font-family:inherit}
+.abtn:hover{background:#f2f4f8}
+.abtn.primary{background:#2b6cd4;color:#fff;border-color:#2b6cd4}
+.abtn.primary:hover{background:#1f5ab8}
+
+/* learning grid */
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.lcard{background:#fff;border:1px solid #dde1e8;border-radius:6px;padding:16px}
+.lcard-hd{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.lcard-ttl{font-size:14px;font-weight:700;color:#222}
+.qmark{width:16px;height:16px;border-radius:50%;background:#e4e8ef;color:#888;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.lcard-sel{margin-left:auto;font-size:12px;font-family:inherit;padding:4px 8px;border:1px solid #cdd2db;border-radius:4px;background:#fff;color:#555;cursor:pointer}
+.lcard-empty{display:flex;align-items:center;justify-content:center;height:100px;color:#bbb;font-size:13px;border:1px solid #eef0f4;border-radius:4px}
+
+/* notice grid */
+.ngrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ncard{background:#fff;border:1px solid #dde1e8;border-radius:6px;padding:16px}
+.ncard-hd{display:flex;align-items:center;margin-bottom:12px}
+.ncard-ttl{font-size:14px;font-weight:700;color:#222}
+.ncard-acts{display:flex;gap:3px;margin-left:auto}
+.nibtn{width:24px;height:24px;border:1px solid #cdd2db;border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#777;font-size:13px;line-height:1}
+.nibtn:hover{background:#f2f4f8}
+.nitem{padding:9px 0;border-bottom:1px solid #f0f2f5;cursor:pointer}
+.nitem:last-child{border-bottom:none}
+.nitem:hover .ni-ttl{color:#2b6cd4}
+.ni-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:3px}
+.ni-bdg{font-size:10.5px;font-weight:700;padding:1px 5px;border-radius:2px;background:#2b6cd4;color:#fff;flex-shrink:0;margin-top:1px}
+.ni-ttl{font-size:12.5px;color:#333;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.ni-date{font-size:11.5px;color:#bbb;margin-left:32px}
+.cni{padding:9px 0;border-bottom:1px solid #f0f2f5;cursor:pointer}
+.cni:last-child{border-bottom:none}
+.cni:hover .cni-ttl{color:#2b6cd4}
+.cni-top{display:flex;justify-content:space-between;font-size:11.5px;color:#999;margin-bottom:4px}
+.cni-ttl{font-size:12.5px;color:#333;padding-left:12px;position:relative;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.cni-ttl::before{content:'·';position:absolute;left:3px;color:#ccc}
+
+/* sidebar widgets */
+.cal-sec-hd{display:flex;align-items:center;margin-bottom:10px}
+.cal-sec-ttl{font-size:14px;font-weight:700;color:#222}
+.cal-plus-btn{margin-left:auto;background:none;border:none;font-size:20px;color:#aaa;cursor:pointer;line-height:1;padding:0}
+.cal-widget{border:1px solid #dde1e8;border-radius:6px;overflow:hidden}
+.cal-w-head{background:#2b6cd4;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:8px 14px}
+.cal-w-ttl{font-size:13px;font-weight:600}
+.cal-w-nav{background:none;border:none;color:#fff;cursor:pointer;font-size:12px;padding:3px 6px;border-radius:3px;line-height:1}
+.cal-w-nav:hover{background:rgba(255,255,255,.2)}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:#f0f4fb;border-bottom:1px solid #dde1e8}
+.cal-dow span{text-align:center;font-size:11.5px;font-weight:600;padding:7px 0;color:#666}
+.cal-dow span:first-child{color:#e84040}
+.cal-dow span:last-child{color:#2b6cd4}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr)}
+.cd{text-align:center;font-size:12px;padding:5px 0;cursor:pointer;color:#333;position:relative;line-height:2}
+.cd:hover:not(.empty){background:#eef3fc}
+.cd.empty{color:#ddd;cursor:default}
+.cd.sun{color:#e84040}
+.cd.sat{color:#2b6cd4}
+.cd.today{font-weight:700;color:#fff!important}
+.cd.today .di{background:#2b6cd4;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.cd.d1{font-weight:700;color:#fff!important}
+.cd.d1 .di{background:#444;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.cd.d5{font-weight:700;color:#fff!important}
+.cd.d5 .di{background:#2b6cd4;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.up-ttl{font-size:14px;font-weight:700;color:#222;margin-bottom:12px}
+.ev-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.ev-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ei-v{background:#888}
+.ei-h{background:#e84040}
+.ei-s{background:#e85c2b}
+.ev-body{flex:1;min-width:0}
+.ev-crs{font-size:11.5px;color:#999;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-nm{font-size:12.5px;font-weight:600;color:#222;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-dt{font-size:11.5px;color:#bbb;margin-top:2px}
+.ql-ttl{font-size:14px;font-weight:700;color:#222;margin-bottom:10px}
+.ql-list{display:flex;flex-direction:column;gap:8px}
+.ql-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:6px;cursor:pointer;transition:opacity .15s}
+.ql-item:hover{opacity:.82}
+.ql-c1{background:#ddeeff}
+.ql-c2{background:#c5f0e2}
+.ql-c3{background:#fddede}
+.ql-ico{width:42px;height:42px;border-radius:8px;background:rgba(255,255,255,.65);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ql-body .qn{font-size:12.5px;font-weight:700;color:#1a1a1a;margin-bottom:2px}
+.ql-body .qd{font-size:11px;color:#555;line-height:1.4}
+.chip-orange{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:12px;background:#fff3ee;color:#e85c2b;border:1px solid #ffd0ba;white-space:nowrap}
+
+/* ── COURSE HERO ── */
+.course-hero{
+  height:168px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.035) 25%,transparent 25%) 0 0/70px 70px,
+    linear-gradient(225deg,rgba(255,255,255,.03) 25%,transparent 25%) 0 0/70px 70px,
+    linear-gradient(315deg,rgba(255,255,255,.035) 25%,transparent 25%) 35px 35px/70px 70px,
+    #1a1a2e;
+  display:flex;align-items:center;padding:0 40px;color:#fff;
+}
+.hero-avatar{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-inner{flex:1;min-width:0}
+.hero-title{font-size:26px;font-weight:700;letter-spacing:-0.6px;margin-bottom:14px;line-height:1.2}
+.hero-meta{display:flex;align-items:center;gap:12px;color:#c0ccdf;font-size:13.5px;font-weight:500;flex-wrap:wrap}
+.hero-meta-sep{color:rgba(255,255,255,.3)}
+.hero-meta-btn{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:4px 12px;font-size:12.5px;font-family:inherit;color:#c8d8f0;cursor:pointer}
+.hero-meta-btn:hover{background:rgba(255,255,255,.2)}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:226px 1fr;min-height:calc(100vh - 96px - 168px)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:#f5f5f6;border-right:1px solid #d8dce4}
+.side-section{border-bottom:1px solid #d8dce4}
+.side-ttl{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#2b6cd4;font-weight:700;font-size:14px;cursor:pointer}
+.side-ttl.gray{color:#444;background:#eceef1}
+.side-ttl .toggle{color:#bbb;font-size:18px;font-weight:400}
+.side-items{padding:4px 0 10px}
+.side-btn{
+  width:100%;border:0;background:transparent;text-align:left;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 18px 8px 24px;
+  font-size:13px;color:#555;font-family:inherit;cursor:pointer;
+}
+.side-btn:hover{background:#ececed;color:#333}
+.side-btn.active{background:#fff;color:#2b6cd4;font-weight:700;border-left:3px solid #2b6cd4;padding-left:21px}
+.side-dot{width:6px;height:6px;border-radius:50%;background:#ccc;flex-shrink:0}
+.side-btn.active .side-dot{background:#2b6cd4}
+.side-act-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.sai-purple{background:#9b59b6}
+.sai-pink{background:#e84f88}
+.sai-gray{background:#888}
+.sai-blue{background:#2b6cd4}
+.sai-green{background:#22a06b}
+.side-more-btn{display:inline-flex;align-items:center;gap:4px;margin:4px 18px 6px;font-size:12px;padding:4px 12px;border:1px solid #cdd2db;border-radius:12px;background:#fff;color:#666;cursor:pointer;font-family:inherit}
+
+/* ── MAIN CONTENT ── */
+.content{padding:28px 36px 60px;background:#fff;min-width:0}
+
+/* breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:5px;font-size:12px;color:#aaa;margin-bottom:18px}
+.breadcrumb a{color:#aaa;cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{color:#2b6cd4}
+.breadcrumb .sep{color:#ddd}
+.breadcrumb .cur{color:#666;font-weight:500}
+
+/* page title */
+.page-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin:0 0 22px;color:#1a1a1a}
+
+/* ── NOTICE BOX (과목공지) ── */
+.notice-box{
+  background:#f9f8ec;border:1px solid #e2dfa8;
+  border-radius:6px;padding:16px 20px;margin-bottom:18px;
+}
+.notice-box-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.notice-box-title{font-size:14.5px;font-weight:700;color:#333}
+.notice-box-plus{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.7);border:1px solid #c8c4a8;display:flex;align-items:center;justify-content:center;font-size:16px;color:#888;cursor:pointer}
+.notice-line{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);cursor:pointer}
+.notice-line:last-child{border-bottom:none}
+.notice-line:hover .nl-title{color:#2b6cd4;text-decoration:underline}
+.nl-dash{color:#bbb;flex-shrink:0;font-size:13px}
+.nl-title{font-size:13px;color:#333;flex:1;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.nl-date{font-size:11.5px;color:#aaa;flex-shrink:0;white-space:nowrap}
+
+/* ── CONTENT BOX ── */
+.content-box{border:1px solid #dde1e8;border-radius:6px;padding:22px 24px;margin-bottom:18px;background:#fff}
+.block-title{font-size:18px;font-weight:700;letter-spacing:-0.3px;margin:0 0 16px;color:#1a1a1a}
+.divider{height:1px;background:#f0f2f5;margin:0 0 18px}
+
+/* ── STATUS TAGS ── */
+.status{display:inline-flex;align-items:center;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid #dde1e8;background:#f5f6f8;color:#666;white-space:nowrap}
+.status.open{background:#e6f7f0;border-color:#a8e4cc;color:#0f7a43}
+.status.fixed{background:#e8f0fc;border-color:#b8d4f8;color:#1a5cb8}
+.status.review{background:#fff9e0;border-color:#e8d484;color:#9a6200}
+.status.wait{background:#f4edfb;border-color:#d8b8f0;color:#7840a8}
+.status.done{background:#f0f1f3;border-color:#d8dce4;color:#888}
+.status.admin{background:#eef0ff;border-color:#c8d0f8;color:#4048b8}
+.status.lock{background:#fdeaea;border-color:#f4b0b0;color:#c02020}
+
+/* ── ACTIVITY LIST ── */
+.activity-list{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+.activity{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:14px;min-height:36px}
+.act-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.ai-purple{background:#9b59b6}
+.ai-pink{background:#e84f88}
+.ai-gray{background:#888}
+.ai-blue{background:#2b6cd4}
+.ai-green{background:#22a06b}
+.ai-orange{background:#e88c20}
+.activity a{color:#333;text-decoration:none;font-weight:600;font-size:13.5px}
+.activity a:hover{color:#2b6cd4;text-decoration:underline}
+.activity .sub{color:#999;font-size:12px;margin-top:3px;line-height:1.5}
+
+/* ── APPLY BOX (신청가능 특강) ── */
+.apply-box{margin-bottom:18px}
+.apply-box-header{
+  background:#eef2f5;border:1px solid #dde1e8;
+  border-radius:6px 6px 0 0;
+  padding:13px 20px;font-size:14.5px;font-weight:700;color:#333
+}
+.apply-box-body{
+  border:1px solid #dde1e8;border-top:0;border-left:3px solid #2b6cd4;
+  border-radius:0 0 6px 6px;padding:20px 22px;background:#fff
+}
+
+/* ── TOPIC SECTION (주제별 학습활동) ── */
+.topic-section-wrap{border:1px solid #dde1e8;border-radius:6px;margin-bottom:18px;overflow:hidden}
+.topic-header{
+  background:#eef2f5;border-bottom:1px solid #dde1e8;
+  padding:13px 20px;
+  display:flex;justify-content:space-between;align-items:center
+}
+.topic-header h2{margin:0;font-size:14.5px;font-weight:700;color:#333}
+.sort-note{font-size:11.5px;color:#aaa;margin-top:2px}
+.topic-filter{font-size:12px;font-family:inherit;padding:5px 10px;border:1px solid #cdd2db;border-radius:4px;background:#fff;color:#555;cursor:pointer}
+.topic-block{padding:22px 24px;border-bottom:1px solid #f0f2f5;background:#fff}
+.topic-block:last-child{border-bottom:none}
+.topic-block.past{opacity:.68}
+.topic-block.current{background:#fafcff}
+.topic-title{color:#2b6cd4;font-size:19px;font-weight:700;letter-spacing:-0.4px;margin:0 0 10px}
+.topic-meta-line{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 12px;align-items:center}
+.date-badge{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:3px;background:#e8f0fc;color:#2b6cd4;font-size:12px;font-weight:700}
+.topic-meta-line span{font-size:12.5px;color:#666;font-weight:500}
+.red-note{color:#e04040;font-size:12px;font-weight:600;margin:6px 0 2px}
+
+/* ── LECTURE ITEM (특강 행) ── */
+.lecture-item{
+  display:grid;grid-template-columns:108px 32px 1fr 28px;
+  align-items:start;gap:14px;padding:14px 0;
+  border-top:1px solid #f0f2f5;
+}
+.lecture-item:first-child{border-top:none}
+.poster-slot{
+  width:108px;min-height:148px;
+  border:1px dashed #c4ccd8;border-radius:4px;
+  background:#f5f8fb;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#8898aa;font-size:11.5px;font-weight:600;text-align:center;
+  line-height:1.5;
+}
+.poster-slot::before{
+  content:"";width:38px;height:28px;
+  border:1.5px solid #c0d0de;border-radius:3px;margin-bottom:8px;
+  background:linear-gradient(135deg,transparent 55%,#d0dde9 56%),
+             linear-gradient(45deg,transparent 55%,#dce8f0 56%),#fff;
+}
+.poster-slot small{display:block;margin-top:4px;font-size:10.5px;color:#aab8c8;font-weight:600}
+.poster-slot.done{background:#f3f4f6;color:#bbb}
+.lecture-item a{color:#1a1a1a;text-decoration:none;font-size:14.5px;font-weight:700}
+.lecture-item a:hover{color:#2b6cd4;text-decoration:underline}
+.lecture-item .sub{color:#999;font-size:12px;margin-top:6px;line-height:1.6}
+.limit-label{display:inline-block;background:#22a06b;color:#fff;font-weight:700;padding:2px 7px;font-size:11px;border-radius:3px;margin-right:5px}
+.limit-label.ended{background:#888}
+.date-line{color:#e04040;font-size:12px;font-weight:600}
+.time-blue{color:#2b6cd4;font-size:12px;font-weight:600}
+
+/* check button */
+.check-btn{
+  width:22px;height:22px;border:2px solid #c4ccd8;
+  background:#fff;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:14px;font-weight:700;color:#2b6cd4;
+  flex-shrink:0;margin-top:4px;transition:all .13s;
+}
+.check-btn.checked{background:#2b6cd4;border-color:#2b6cd4;color:#fff}
+.check-btn.checked::after{content:"✓"}
+.check-btn.disabled{opacity:.4;background:#f3f4f6;cursor:not-allowed}
+
+/* ── BOARD / TABLE ── */
+.board-wrap{border:1px solid #dde1e8;border-radius:6px;overflow:hidden;margin-bottom:18px}
+.board-info{padding:12px 18px;background:#f8f9fb;border-bottom:1px solid #dde1e8;font-size:12.5px;color:#666;text-align:right}
+.board-info b{color:#e87520}
+.table{width:100%;border-collapse:collapse;border-top:2px solid #333}
+.table th{background:#f8f9fb;border-bottom:1px solid #d8dce4;padding:12px 10px;text-align:center;font-weight:700;font-size:13px}
+.table td{border-bottom:1px solid #e8eaee;padding:12px 10px;text-align:center;font-size:13px;color:#333}
+.table td.title{text-align:left;padding-left:14px}
+.table a{color:#2b6cd4;text-decoration:none;font-weight:600}
+.table a:hover{text-decoration:underline}
+.right-actions{margin-top:16px;display:flex;justify-content:space-between;align-items:center;padding:0 18px 16px}
+.course-tag{display:inline-flex;height:26px;min-width:60px;align-items:center;justify-content:center;font-weight:700;font-size:12px;border-radius:4px;padding:0 12px;background:#2b6cd4;color:#fff}
+.course-tag.past{background:#888;color:#fff}
+.course-tag.fixed{background:#e8f0fc;color:#2b6cd4;border:1px solid #b8d4f8;border-radius:20px}
+
+/* ── BUTTONS ── */
+.btn{background:#fff;border:1px solid #cdd2db;border-radius:4px;padding:7px 14px;color:#444;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:background .12s}
+.btn:hover{background:#f2f4f8}
+.btn.primary{background:#2b6cd4;border-color:#2b6cd4;color:#fff}
+.btn.primary:hover{background:#1f5ab8}
+.btn.small{padding:4px 10px;font-size:12px}
+.btn.gray{background:#f5f6f8}
+.btn.agree{background:#fff;border:2px solid #cdd2db;font-size:16px;padding:6px 12px}
+.btn.agree.on{background:#2b6cd4;border-color:#2b6cd4;color:#fff}
+
+/* ── ARTICLE (공지/게시글 상세) ── */
+.article-box{border:1px solid #dde1e8;border-radius:6px;overflow:hidden;margin-bottom:14px}
+.article-head{border-top:2px solid #333;border-bottom:1px solid #dde1e8;padding:13px 20px;text-align:center;font-size:16px;font-weight:600}
+.article-meta{display:flex;justify-content:space-between;border-bottom:1px solid #dde1e8;padding:10px 20px;color:#888;font-size:12px}
+.article-body{min-height:140px;padding:20px 24px;line-height:1.9;color:#444;font-size:13.5px}
+
+/* ── VOTE BOX ── */
+.vote-box{border:1px solid #dde1e8;border-radius:6px;padding:20px 24px;margin-bottom:14px;background:#fff}
+.vote-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.vote-days{display:flex;gap:32px;margin:14px 0 16px;font-size:16px}
+.vote-day{border:0;background:transparent;padding:7px 0;color:#666;font-weight:500;cursor:pointer;font-family:inherit}
+.vote-day.selected{color:#2b6cd4;font-weight:700;border-bottom:2px solid #2b6cd4}
+.vote-chart{border-left:1px solid #eee;padding-left:16px}
+.vote-chart-title{color:#777;font-weight:700;margin-bottom:12px;font-size:13px}
+.vote-bar-row{display:grid;grid-template-columns:20px 1fr 34px;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
+.vote-bar-bg{height:10px;background:#e8eaee;border-radius:5px;overflow:hidden}
+.vote-bar-fill{height:100%;background:#7ab4e8;border-radius:5px}
+.vote-bar-row.selected .vote-bar-fill{background:#2b6cd4}
+.vote-bar-row.selected .vote-label{color:#2b6cd4;font-weight:700}
+
+/* ── DETAIL GRID ── */
+.detail-grid{display:grid;grid-template-columns:120px 1fr;border-top:2px solid #333;border-radius:0;overflow:hidden}
+.detail-grid dt,.detail-grid dd{border-bottom:1px solid #dde1e8;padding:12px 16px;margin:0}
+.detail-grid dt{background:#f8f9fb;font-weight:700;text-align:center;font-size:13px;color:#444}
+.detail-grid dd{line-height:1.7;font-size:13.5px}
+.text-section{margin-top:20px}
+.text-section h3{font-size:15px;font-weight:700;margin:0 0 10px;color:#222}
+.text-section p,.text-section li{line-height:1.8;color:#555;font-size:13.5px}
+.text-section ul{margin:0;padding-left:18px}
+
+/* ── TWO COL LAYOUT ── */
+.two-col{display:grid;grid-template-columns:1fr 280px;gap:18px}
+.side-mini{border:1px solid #dde1e8;border-radius:6px;padding:18px;background:#fff}
+.side-mini h3{margin:0 0 14px;font-size:15px;font-weight:700;color:#222}
+.stat-line{display:flex;justify-content:space-between;border-bottom:1px solid #f0f2f5;padding:9px 0;font-size:13px;color:#666}
+.stat-line:last-child{border-bottom:none}
+.stat-line b{color:#222;font-weight:700}
+.lecture-poster-side{
+  border:1px dashed #c4ccd8;border-radius:4px;
+  background:#f5f8fb;min-height:180px;margin-bottom:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#8898aa;text-align:center;font-size:12px;font-weight:600;line-height:1.5;
+}
+.lecture-poster-side::before{
+  content:"";width:52px;height:38px;
+  border:1.5px solid #c0d0de;border-radius:3px;margin-bottom:10px;
+  background:linear-gradient(135deg,transparent 55%,#d0dde9 56%),
+             linear-gradient(45deg,transparent 55%,#dce8f0 56%),#fff;
+}
+.lecture-poster-side small{display:block;margin-top:4px;font-size:11px;color:#aab8c8}
+
+/* ── RESOURCE TABLE ── */
+.resource-table{width:100%;border-collapse:collapse;margin-top:12px;border-radius:6px;overflow:hidden;border:1px solid #dde1e8}
+.resource-table td{border-bottom:1px solid #dde1e8;padding:11px 14px}
+.resource-table tr:last-child td{border-bottom:none}
+.resource-table td:first-child{width:180px;background:#f8f9fb;font-weight:700;font-size:13px;color:#444}
+.green-cell{background:#e6f7f0;color:#0f7a43;font-weight:600}
+.red-cell{background:#f5f6f8;color:#e04040;font-weight:600}
+.file-link{color:#2b6cd4;font-weight:600;text-decoration:none}
+.file-link:hover{text-decoration:underline}
+.warning-box{margin-top:14px;background:#fdeaea;border:1px solid #f4b0b0;border-radius:5px;color:#b02020;padding:14px 18px;line-height:1.7;font-size:13px;font-weight:500}
+
+/* ── COMMENT ── */
+.comment-box{margin-top:14px;border:1px solid #dde1e8;border-radius:6px;padding:14px 16px;display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:start}
+.comment-avatar{width:32px;height:32px;background:#e4e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#888}
+.comment-name{color:#2b6cd4;font-weight:700;margin-bottom:4px;font-size:13px}
+.comment-text{color:#444;line-height:1.6;font-size:13px}
+
+/* ── FORM GRID ── */
+.form-grid{display:grid;grid-template-columns:110px 1fr;border-top:2px solid #333;border-radius:0;overflow:hidden}
+.form-grid label,.form-grid .field{border-bottom:1px solid #dde1e8;padding:11px 14px;margin:0}
+.form-grid label{background:#f8f9fb;font-weight:700;text-align:center;font-size:13px;color:#444;display:flex;align-items:center;justify-content:center}
+.form-grid input,.form-grid textarea,.form-grid select{width:100%;border:1px solid #cdd2db;border-radius:4px;padding:7px 10px;font-family:inherit;font-size:13px;outline:none}
+.form-grid input:focus,.form-grid textarea:focus{border-color:#2b6cd4}
+.form-grid textarea{min-height:80px;resize:vertical}
+
+/* ── CALENDAR ── */
+.calendar-simple{border:1px solid #dde1e8;border-radius:6px;overflow:hidden;display:grid;grid-template-columns:88px repeat(5,1fr)}
+.cal-head,.cal-time,.cal-cell{border-right:1px solid #dde1e8;border-bottom:1px solid #dde1e8;min-height:64px;padding:9px}
+.cal-head{min-height:auto;background:#2b6cd4;color:#fff;text-align:center;font-weight:700;font-size:13px}
+.cal-time{background:#f8f9fb;color:#666;font-weight:700;font-size:12.5px}
+.cal-cell:nth-child(6n){border-right:none}
+.cal-event{display:block;border-left:3px solid #2b6cd4;background:#e8f0fc;padding:6px 8px;font-size:11.5px;line-height:1.4;color:#333;border-radius:0 3px 3px 0}
+.cal-event.green{border-left-color:#22a06b;background:#e6f7f0}
+
+/* ── TIME RESULT (고정 시간 투표 결과) ── */
+.time-result-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.time-result-card{border:1px solid #dde1e8;border-radius:6px;background:#f8f9fb;padding:12px}
+.time-result-card h4{margin:0 0 10px;color:#2b6cd4;font-size:14px;font-weight:700}
+.time-result-row{display:grid;grid-template-columns:40px 1fr 30px;align-items:center;gap:6px;margin:7px 0;font-size:12px}
+.time-result-bg{height:8px;background:#e4e8ee;border-radius:4px;overflow:hidden}
+.time-result-fill{height:100%;background:#88b8e0;border-radius:4px}
+.time-result-row.top .time-result-fill{background:#2b6cd4}
+.time-result-row.top{font-weight:700;color:#2b6cd4}
+.closed-note{display:inline-block;margin-top:12px;padding:8px 12px;background:#f8f9fb;border:1px solid #dde1e8;border-radius:4px;color:#777;font-size:12px;font-weight:600}
+
+/* ── ADMIN TABLE ── */
+.admin-table-wrap{border:1px solid #dde1e8;border-radius:6px;overflow:hidden}
+
+/* ── TOAST ── */
+.toast{display:none;position:fixed;right:22px;bottom:22px;max-width:340px;background:#1a1a2e;color:#fff;padding:13px 18px;border-radius:6px;font-size:13px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.2);z-index:100}
+.toast.show{display:block}
+
+/* ===== 수정본 추가 스타일 ===== */
+.course-tag,
+.course-tag.past,
+.course-tag.fixed,
+.course-tag.scheduled,
+.course-tag.lecture{
+  display:inline-flex !important;
+  height:26px !important;
+  min-width:58px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-weight:700 !important;
+  font-size:12px !important;
+  border-radius:20px !important;
+  padding:0 14px !important;
+  background:#e8f0fc !important;
+  color:#2b6cd4 !important;
+  border:1px solid #b8d4f8 !important;
+}
+
+.poster-slot{
+  position:relative !important;
+  width:108px !important;
+  min-height:148px !important;
+  border:1px solid #d8dce4 !important;
+  border-radius:6px !important;
+  overflow:hidden !important;
+  background:#f5f8fb !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:flex-end !important;
+  padding:12px 10px !important;
+  color:#fff !important;
+  box-shadow:0 2px 7px rgba(30,50,80,.08) !important;
+}
+.poster-slot::before{display:none !important}
+.poster-slot::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.94;
+  z-index:0;
+}
+.poster-slot.poster-ai::after{
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255,255,255,.35) 0 12%, transparent 13%),
+    linear-gradient(135deg, rgba(255,255,255,.20) 0 18%, transparent 18% 100%),
+    linear-gradient(160deg,#113a8f 0%,#2b6cd4 52%,#7bd3ff 100%);
+}
+.poster-slot.poster-brand::after{
+  background:
+    radial-gradient(circle at 18% 78%, rgba(255,255,255,.32) 0 14%, transparent 15%),
+    linear-gradient(45deg, rgba(255,255,255,.22) 0 22%, transparent 22% 100%),
+    linear-gradient(160deg,#7a3db8 0%,#e84f88 52%,#ffbf7a 100%);
+}
+.poster-slot.poster-service::after{
+  background:
+    radial-gradient(circle at 78% 72%, rgba(255,255,255,.30) 0 14%, transparent 15%),
+    linear-gradient(135deg, rgba(255,255,255,.20) 0 20%, transparent 20% 100%),
+    linear-gradient(160deg,#174b3f 0%,#22a06b 55%,#b7f2d3 100%);
+}
+.poster-kicker{
+  position:relative;
+  z-index:1;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.04em;
+  opacity:.92;
+  margin-bottom:5px;
+}
+.poster-title{
+  position:relative;
+  z-index:1;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:-.05em;
+  line-height:1.16;
+  text-align:left;
+}
+.poster-date{
+  position:relative;
+  z-index:1;
+  font-size:10px;
+  font-weight:700;
+  margin-top:9px;
+  opacity:.9;
+}
+.poster-slot small{display:none !important}
+
+.lecture-poster-side{
+  position:relative !important;
+  border:1px solid #d8dce4 !important;
+  border-radius:8px !important;
+  background:#f5f8fb !important;
+  min-height:210px !important;
+  margin-bottom:16px !important;
+  overflow:hidden !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:flex-end !important;
+  padding:22px 20px !important;
+  color:#fff !important;
+  box-shadow:0 2px 8px rgba(30,50,80,.08) !important;
+}
+.lecture-poster-side::before{display:none !important}
+.lecture-poster-side::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(255,255,255,.35) 0 13%, transparent 14%),
+    linear-gradient(135deg, rgba(255,255,255,.20) 0 20%, transparent 20% 100%),
+    linear-gradient(160deg,#113a8f 0%,#2b6cd4 52%,#7bd3ff 100%);
+}
+.lecture-poster-side .poster-kicker,
+.lecture-poster-side .poster-title,
+.lecture-poster-side .poster-date{position:relative;z-index:1}
+.lecture-poster-side .poster-title{font-size:25px;letter-spacing:-.06em}
+.lecture-poster-side small{display:none !important}
+
+.month-calendar-wrap{
+  margin-top:24px;
+  border:1px solid #dde1e8;
+  border-radius:6px;
+  overflow:hidden;
+  background:#fff;
+}
+.month-cal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  background:#eef2f5;
+  border-bottom:1px solid #dde1e8;
+}
+.month-cal-head h3{margin:0;font-size:15px;font-weight:700;color:#333}
+.month-cal-note{font-size:12px;color:#888}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.month-dow{
+  background:#f8f9fb;
+  border-right:1px solid #e8eaee;
+  border-bottom:1px solid #dde1e8;
+  padding:9px 0;
+  text-align:center;
+  font-size:12px;
+  font-weight:700;
+  color:#666;
+}
+.month-dow.sun{color:#e84040}
+.month-dow.sat{color:#2b6cd4}
+.month-cell{
+  min-height:92px;
+  border-right:1px solid #e8eaee;
+  border-bottom:1px solid #e8eaee;
+  padding:8px;
+  background:#fff;
+}
+.month-cell:nth-child(7n){border-right:none}
+.month-cell.empty{background:#fafafa}
+.month-day{font-size:12px;font-weight:700;color:#555;margin-bottom:6px}
+.month-day.sun{color:#e84040}
+.month-day.sat{color:#2b6cd4}
+.month-event{
+  display:block;
+  margin-top:5px;
+  padding:5px 6px;
+  border-left:3px solid #2b6cd4;
+  background:#e8f0fc;
+  color:#2458a8;
+  font-size:11px;
+  line-height:1.35;
+  border-radius:0 3px 3px 0;
+  cursor:pointer;
+}
+.month-event.brand{border-left-color:#9b59b6;background:#f4edfb;color:#7840a8}
+.month-event.done{border-left-color:#888;background:#f0f1f3;color:#666}
+.month-event.fixed{border-left-color:#22a06b;background:#e6f7f0;color:#0f7a43}
+
+
+/* detail poster SVG override */
+.lecture-poster-side{
+  padding:0 !important;
+  background:#fff !important;
+  align-items:stretch !important;
+  justify-content:center !important;
+}
+.lecture-poster-side::after{display:none !important}
+.lecture-poster-side svg{position:relative;z-index:2;width:100%;display:block}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE: DASHBOARD ══════════════ -->
+<div id="pg-dashboard" class="page active">
+<div class="topbar">
+  <div class="topbar-links">
+    <a>연세대학교</a><a>교수학습혁신센터</a><a>연세포털</a><a>도서관</a><a>LearnUs(비학위)</a>
+  </div>
+  <div class="topbar-right">
+    <button class="lang-pill">한국어 (ko) ▾</button>
+    <span class="topbar-user">이지현</span>
+    <div class="user-avatar">이지<span class="notif-dot">2</span></div>
+    <span class="topbar-logout">로그아웃</span>
+  </div>
+</div>
+<header class="mheader">
+  <a href="#" class="logo" onclick="goPage('pg-dashboard');return false">
+    <div class="logo-bars"><div class="lbar" style="height:11px"></div><div class="lbar" style="height:16px;margin:0 1.5px"></div><div class="lbar" style="height:21px"></div></div>
+    <span class="logo-text">LearnUs</span><span class="logo-sub">YONSEI</span>
+  </a>
+  <nav class="mnav">
+    <a class="active">학위과정</a><a>비교과과정</a><a>이용안내</a><a>My Page</a>
+  </nav>
+</header>
+<div class="dash-body">
+  <main class="dash-main">
+    <div class="dash-header">
+      <h1>나의강좌</h1>
+      <div class="dash-btns">
+        <button class="dbtn">강의 시간표</button>
+        <button class="dbtn">과거강좌조회</button>
+        <button class="dbtn">조교/청강신청</button>
+        <button class="dbtn">대시보드 설정</button>
+      </div>
+    </div>
+    <div class="clist">
+      <div class="crow highlight" onclick="goPage('pg-classroom')">
+        <div class="badge-col"><span class="cbadge cb-special">특강</span></div>
+        <div class="cmeta">
+          <div class="cname">통합디자인학과 진로 특강 2026 <span class="ntag">NEW</span></div>
+          <div class="csub">통합디자인학과</div>
+        </div>
+        <div class="cright">
+          <button class="abtn primary" onclick="event.stopPropagation();goPage('pg-classroom')">강의실 입장 →</button>
+        </div>
+      </div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-bik">비교과</span></div><div class="cmeta"><div class="cname">[법정의무]2026 장애인식개선교육(신촌,국제-학생)</div><div class="csub">장애학생지원센터</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-kyo">교과</span><span class="cbadge cb-hak">학부</span></div><div class="cmeta"><div class="cname">딥러닝개론및응용 (AIC3100.01-00) <span class="sem">(1학기)</span></div><div class="csub">AIC3100.01-00 / 황성재</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div><button class="abtn">출석현황</button></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-kyo">교과</span><span class="cbadge cb-hak">학부</span></div><div class="cmeta"><div class="cname">인포메이션디자인 (DSN3108.01-00) <span class="sem">(1학기)</span></div><div class="csub">DSN3108.01-00 / 박고은</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div><button class="abtn">출석현황</button></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-kyo">교과</span><span class="cbadge cb-hak">학부</span></div><div class="cmeta"><div class="cname">인터렉티브미디어디자인 (DSN3110.01-00) <span class="sem">(1학기)</span></div><div class="csub">DSN3110.01-00 / 이상원 / 박수진</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div><button class="abtn">출석현황</button></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-kyo">교과</span><span class="cbadge cb-hak">학부</span></div><div class="cmeta"><div class="cname">데이터기반통합디자인리서치 (DSN3137.01-00) <span class="sem">(1학기)</span></div><div class="csub">DSN3137.01-00 / 이상원 / 신영수</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div><button class="abtn">출석현황</button></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-kyo">교과</span><span class="cbadge cb-hak">학부</span></div><div class="cmeta"><div class="cname">재산거래와법 (YCH1601.01-00) <span class="sem">(1학기)</span><span class="ntag">NEW</span></div><div class="csub">YCH1601.01-00 / 신정민</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">100%</span></div><button class="abtn">출석현황</button></div></div>
+      <div class="crow"><div class="badge-col"><span class="cbadge cb-bik">비교과</span></div><div class="cmeta"><div class="cname">NEW (법정의무) 2026 연세대학교 폭력예방교육 (신촌, 국제) (KO, EN, CN)</div><div class="csub">&nbsp;</div></div><div class="cright"><div class="prog"><span class="prog-lbl">학습률</span><span class="prog-val">16.7%</span></div></div></div>
+    </div>
+    <!-- learning status -->
+    <div class="lgrid">
+      <div class="lcard"><div class="lcard-hd"><span class="lcard-ttl">나의 학습현황</span><span class="qmark">?</span><select class="lcard-sel"><option>강좌를 선택하세요.</option><option>딥러닝개론및응용</option><option>인포메이션디자인</option><option>통합디자인학과 진로 특강 2026</option></select></div><div class="lcard-empty">강좌를 선택하세요.</div></div>
+      <div class="lcard"><div class="lcard-hd"><span class="lcard-ttl">나의 동영상 학습현황</span><span class="qmark">?</span><select class="lcard-sel"><option>강좌를 선택하세요.</option><option>딥러닝개론및응용</option><option>인포메이션디자인</option></select></div><div class="lcard-empty">강좌를 선택하세요.</div></div>
+    </div>
+    <!-- notices -->
+    <div class="ngrid">
+      <div class="ncard">
+        <div class="ncard-hd"><span class="ncard-ttl">공지사항</span><div class="ncard-acts"><button class="nibtn">‹</button><button class="nibtn">›</button><button class="nibtn" style="font-size:15px">+</button></div></div>
+        <div class="nitem"><div class="ni-row"><span class="ni-bdg">공지</span><span class="ni-ttl">과제(표절검사) 생성 시 기존 활동 재사용 유의사항 안내</span></div><div class="ni-date">2026년 3월 11일</div></div>
+        <div class="nitem"><div class="ni-row"><span class="ni-bdg">공지</span><span class="ni-ttl">LearnUs Yonsei 안드로이드 앱 오류 관련(앱 실행시 자동 종료)</span></div><div class="ni-date">2026년 3월 09일</div></div>
+        <div class="nitem"><div class="ni-row"><span class="ni-bdg">공지</span><span class="ni-ttl">연세 포털 계좌등록 안내</span></div><div class="ni-date">2026년 2월 27일</div></div>
+      </div>
+      <div class="ncard">
+        <div class="ncard-hd"><span class="ncard-ttl">진행강좌공지</span><div class="ncard-acts"><button class="nibtn">‹</button><button class="nibtn">›</button><button class="nibtn" style="font-size:15px">+</button></div></div>
+        <div class="cni"><div class="cni-top"><span>[통합디자인학과 진로 특강]</span><span>2026년 6월 02일</span></div><div class="cni-ttl">AI 활용 디자인 특강 신청 안내</div></div>
+        <div class="cni"><div class="cni-top"><span>[딥러닝개론및응용 (AIC3100.01-00)]</span><span>2026년 5월 31일</span></div><div class="cni-ttl">[Final Exam] Notice on Kaggle Pre-Test Recommendation</div></div>
+        <div class="cni"><div class="cni-top"><span>[재산거래와법 (YCH1601.01-00)]</span><span>2026년 5월 31일</span></div><div class="cni-ttl">기말고사 공지</div></div>
+      </div>
+    </div>
+  </main>
+  <aside class="dash-sidebar">
+    <!-- Calendar -->
+    <div>
+      <div class="cal-sec-hd"><span class="cal-sec-ttl">달력</span><button class="cal-plus-btn">+</button></div>
+      <div class="cal-widget">
+        <div class="cal-w-head"><button class="cal-w-nav">◄</button><span class="cal-w-ttl">2026년 6월</span><button class="cal-w-nav">►</button></div>
+        <div class="cal-dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div class="cal-days" id="dashCal"></div>
+      </div>
+    </div>
+    <!-- Upcoming -->
+    <div>
+      <div class="up-ttl">예정된 할일</div>
+      <div class="ev-row"><div class="ev-icon ei-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="8 5 19 12 8 19"/></svg></div><div class="ev-body"><div class="ev-crs">딥러닝개론및응용 (AIC3100.01-00)</div><div class="ev-nm">Lecture 13-1: Domain Adaptati…</div><div class="ev-dt">2026년 6월 02일</div></div></div>
+      <div class="ev-row"><div class="ev-icon ei-h"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="ev-body"><div class="ev-crs">딥러닝개론및응용 (AIC3100.01-00)</div><div class="ev-nm">HW Assignment 2 - Due Jun 5 …</div><div class="ev-dt">2026년 6월 05일</div></div></div>
+      <div class="ev-row" style="cursor:pointer" onclick="goPage('pg-classroom')"><div class="ev-icon ei-s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div class="ev-body"><div class="ev-crs">통합디자인학과 진로 특강 2026</div><div class="ev-nm">AI 활용 디자인 신청 가능</div><div class="ev-dt">2026년 6월 10일(수) 16:00</div></div></div>
+    </div>
+    <!-- Quick links -->
+    <div>
+      <div class="ql-ttl">교육 및 공모전 바로가기</div>
+      <div class="ql-list">
+        <div class="ql-item ql-c1"><div class="ql-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2b6cd4" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="ql-body"><div class="qn">LearnUs 매뉴얼</div><div class="qd">LearnUs의 매뉴얼과 FAQ를 확인할 수 있습니다</div></div></div>
+        <div class="ql-item ql-c2"><div class="ql-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a7a52" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="ql-body"><div class="qn">참여형 강의 공간 ALLO</div><div class="qd">학생들이 적극적으로 참여하는 ALLO!</div></div></div>
+        <div class="ql-item ql-c3"><div class="ql-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c03030" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="ql-body"><div class="qn">종합채점솔루션 Gradescope</div><div class="qd">Gradescope 매뉴얼 및 궁금한 내용</div></div></div>
+      </div>
+    </div>
+  </aside>
+</div>
+</div><!-- /pg-dashboard -->
+
+<!-- ══════════════ PAGE: CLASSROOM ══════════════ -->
+<div id="pg-classroom" class="page">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-links">
+    <a>연세대학교</a><a>교수학습혁신센터</a><a>연세포털</a><a>도서관</a><a>LearnUs(비학위)</a>
+  </div>
+  <div class="topbar-right">
+    <button class="lang-pill">한국어 (ko) ▾</button>
+    <span class="topbar-user">이지현</span>
+    <div class="user-avatar">이지<span class="notif-dot">2</span></div>
+    <span class="topbar-logout">로그아웃</span>
+  </div>
+</div>
+
+<!-- MAIN HEADER -->
+<header class="mheader">
+  <a href="#" class="logo" onclick="goPage('pg-dashboard');return false">
+    <div class="logo-bars"><div class="lbar" style="height:11px"></div><div class="lbar" style="height:16px;margin:0 1.5px"></div><div class="lbar" style="height:21px"></div></div>
+    <span class="logo-text">LearnUs</span><span class="logo-sub">YONSEI</span>
+  </a>
+  <nav class="mnav">
+    <a class="active">학위과정</a>
+    <a>비교과과정</a>
+    <a>이용안내</a>
+    <a>My Page</a>
+  </nav>
+</header>
+
+<!-- COURSE HERO -->
+<div class="course-hero">
+  <div class="hero-inner">
+    <div class="hero-title">통합디자인학과 진로 특강 2026</div>
+    <div class="hero-meta">
+      <div class="hero-avatar">👤</div>
+      <span>통합디자인학과</span>
+      <span class="hero-meta-sep">|</span>
+      <button class="hero-meta-btn">학과 공통 페이지 ▾</button>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="side-section">
+      <div class="side-ttl">강의실 홈 <span class="toggle">−</span></div>
+      <div class="side-items">
+        <button class="side-btn active" data-view="home"><span class="side-dot"></span>강의 개요</button>
+        <button class="side-btn" data-view="notices"><span class="side-dot"></span>학과 특강 목록</button>
+        <button class="side-btn" data-view="demand"><span class="side-dot"></span>수요조사 게시판</button>
+        <button class="side-btn" data-view="calendar"><span class="side-dot"></span>특강 캘린더</button>
+      </div>
+    </div>
+    <div class="side-section">
+      <div class="side-ttl gray">학습활동 <span class="toggle">＋</span></div>
+    </div>
+    <div class="side-section">
+      <div class="side-ttl gray">기타 관리 <span class="toggle">⌃</span></div>
+      <div class="side-items">
+        <button class="side-btn" data-view="template"><span class="side-dot"></span>특강 공지 작성</button>
+        <button class="side-btn" data-view="admin"><span class="side-dot"></span>수요 글 관리</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="content" id="app"></main>
+</div>
+
+</div><!-- /pg-classroom -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── PAGE SWITCHING ── */
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  if(id === 'pg-classroom'){
+    view = "home";
+    if(typeof render === "function") render();
+    document.querySelectorAll("#pg-classroom .side-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.view === "home");
+    });
+  }
+
+  window.scrollTo(0,0);
+}
+
+/* ── DASHBOARD CALENDAR ── */
+(function(){
+  const el = document.getElementById('dashCal');
+  if(!el) return;
+  const days = [
+    {d:null},{d:1,s:'d1'},{d:2,s:'today'},{d:3},{d:4},{d:5,s:'d5'},{d:6,s:'sat'},
+    {d:7,s:'sun'},{d:8},{d:9},{d:10},{d:11},{d:12},{d:13,s:'sat'},
+    {d:14,s:'sun'},{d:15},{d:16},{d:17},{d:18},{d:19},{d:20,s:'sat'},
+    {d:21,s:'sun'},{d:22},{d:23},{d:24},{d:25},{d:26},{d:27,s:'sat'},
+    {d:28,s:'sun'},{d:29},{d:30}
+  ];
+  el.innerHTML = days.map(c => {
+    if(!c.d) return '<div class="cd empty"></div>';
+    const s = c.s||'';
+    let cls='cd';
+    if(s==='sun') cls+=' sun';
+    if(s==='sat') cls+=' sat';
+    if(s==='d1') return `<div class="${cls} d1"><span class="di">${c.d}</span></div>`;
+    if(s==='today') return `<div class="${cls} today"><span class="di">${c.d}</span></div>`;
+    if(s==='d5') return `<div class="${cls} d5"><span class="di">${c.d}</span></div>`;
+    return `<div class="${cls}">${c.d}</div>`;
+  }).join('');
+})();
+
+/* ══════════════════════════════════
+   CLASSROOM JS (원본 구조 그대로)
+══════════════════════════════════ */
+/* ═══════════════════════════════════════
+   DATA  (원본 파일 구조 그대로)
+═══════════════════════════════════════ */
+let view = "home";
+let applied = new Set();
+let voted = new Set();
+let selectedDay = "수";
+const dayVotes = {"월":12,"화":9,"수":18,"목":11,"금":17};
+const fixedTimeResults = {
+  "월":[["10시",8],["14시",31],["16시",18]],
+  "화":[["11시",34],["14시",17],["16시",12]],
+  "수":[["11시",15],["14시",42],["16시",28]],
+  "목":[["11시",11],["14시",39],["16시",22]],
+  "금":[["11시",10],["14시",36],["16시",19]]
+};
+
+const notice = {
+  title:"[필독] 2026-1학기 통합디자인학과 특강 고정 시간 안내",
+  date:"2026/06/02 15:53",
+  body:`이번 학기 통합디자인학과 진로 특강은 학기 초 수요조사 게시판에서 진행한 '특강 고정 시간 선호 조사' 결과를 바탕으로 요일별 고정 시간대를 기준으로 운영됩니다.<br><br>
+  월요일 14:00 / 화요일 11:00 / 수요일 14:00 / 목요일 14:00 / 금요일 14:00<br><br>
+  해당 투표는 이미 종료되었으며, 학생들이 자신의 시간표에 맞춰 선택한 요일별 선호 시간을 반영했습니다. 특강별 세부 일정은 연사 일정과 강의실 사정에 따라 일부 조정될 수 있습니다.`
+};
+
+const lectures = [
+  {
+    id:1, week:"1주차 [6월03일 - 6월09일]",
+    title:"AI 활용 디자인",
+    speaker:"정수연 Creater",
+    date:"2026-06-10 16:00", place:"생활과학관 201호",
+    status:"신청 가능", count:"42 / 60",
+    desc:"AI 시대에 디자이너가 도구를 해석하고 자신의 작업 언어를 만드는 방법을 실습 중심으로 다룹니다.",
+    resourcesOpen:true, expired:false
+  },
+  {
+    id:2, week:"2주차 [6월10일 - 6월16일]",
+    title:"브랜드 경험 설계와 포트폴리오 전략 전략",
+    speaker:"박서윤 BX 크리에이티브 디렉터",
+    date:"2026-06-17 14:00", place:"생활과학관 301호",
+    status:"예정", count:"18 / 50",
+    desc:"브랜드 경험 프로젝트를 포트폴리오에서 맥락, 역할, 결과 중심으로 설명하는 방법을 다룹니다.",
+    resourcesOpen:false, expired:false
+  },
+  {
+    id:3, week:"지난 특강",
+    title:"서비스 기획자와 디자이너의 협업 방식 방식",
+    speaker:"김도현 김도현 IT 플랫폼 서비스 기획자",
+    date:"2026-05-22 14:00", place:"온라인 Zoom",
+    status:"종료", count:"31 / 80",
+    desc:"기획자와 디자이너가 문제 정의, 화면 설계, 데이터 확인 과정에서 어떤 산출물로 협업하는지 다룹니다.",
+    resourcesOpen:true, expired:true
+  }
+];
+
+const demands = [
+  {
+    id:0, title:"2026-1학기 특강 고정 시간 선호 조사", writer:"관리자",
+    date:"2026-03-03", views:418, votes:126, status:"종료", type:"timeVote",
+    body:"학기 초 학생들의 시간표를 기준으로 요일별 특강 가능 시간을 조사한 글입니다. 이 결과를 바탕으로 학과 특강의 고정 운영 시간이 결정되었습니다.",
+    comments:[["관리자","해당 투표는 종료되었습니다. 투표 결과는 과목공지의 '특강 고정 시간 안내'에 반영되었습니다."]]
+  },
+  {
+    id:1, title:"AI 관련 기술에 대한 강의를 듣고 싶어요", writer:"익명",
+    date:"2026-03-12", views:224, votes:67, status:"확정",
+    body:"최근 AI를 활용한 디자인 작업과 리서치 방법에 관심이 많아졌습니다. 실무자는 AI 기술을 어떤 방식으로 사용하고, 결과물을 어떤 기준으로 판단하는지 알고 싶습니다.",
+    comments:[["관리자","해당 수요는 AI 디자인 실무 특강으로 확정되어 학과 특강 목록에 게시되었습니다."]]
+  },
+  {
+    id:2, title:"게임 UX 포트폴리오 준비 특강을 듣고 싶어요", writer:"익명",
+    date:"2026-05-30", views:151, votes:51, status:"섭외 중",
+    body:"게임 회사 지원을 준비하는 학생이 많지만 관련 실무 정보를 얻기 어렵습니다. 게임 UX 직무에서 포트폴리오를 어떻게 구성해야 하는지 듣고 싶습니다.",
+    comments:[]
+  },
+  {
+    id:3, title:"졸업 전 포트폴리오 점검 워크숍 수요 확인", writer:"관리자",
+    date:"2026-05-28", views:96, votes:38, status:"검토 중",
+    body:"학기 말 포트폴리오 집중 점검 워크숍 개설 가능성을 확인하기 위한 수요조사 글입니다. 관심 있는 학생은 동의와 선호 요일을 남겨주시기 바랍니다.",
+    comments:[]
+  },
+  {
+    id:4, title:"해외 취업 준비와 영문 포트폴리오", writer:"익명",
+    date:"2026-05-24", views:73, votes:29, status:"검토 중",
+    body:"해외 취업에 필요한 자료 준비 방식과 영문 포트폴리오 작성 방법, 실무자 피드백을 듣고 싶습니다.",
+    comments:[]
+  }
+];
+
+let currentLectureId = 1;
+let currentDemandId = 1;
+
+/* ═══════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════ */
+function setView(v){
+  view = v;
+  // classroom page가 active 상태인지 확인 후 사이드바 업데이트
+  document.querySelectorAll("#pg-classroom .side-btn").forEach(b => b.classList.toggle("active", b.dataset.view === v));
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("#pg-classroom .side-btn").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove("show"), 2400);
+}
+function crumb(last){
+  return `<div class="breadcrumb">
+    <a onclick="goPage('pg-dashboard')">나의강좌</a>
+    <span class="sep">›</span>
+    <a onclick="setView('home')">통합디자인학과 진로 특강 2026</a>
+    <span class="sep">›</span>
+    <span class="cur">${last}</span>
+  </div>`;
+}
+function statusClass(s){
+  if(s==="신청 가능") return "open";
+  if(s==="확정") return "fixed";
+  if(s==="검토 중") return "review";
+  if(s==="섭외 중") return "wait";
+  if(s==="종료"||s==="예정") return "done";
+  if(s==="관리자") return "admin";
+  return "done";
+}
+function lectureById(id){ return lectures.find(l => l.id === id); }
+function demandById(id){ return demands.find(d => d.id === id); }
+function sortedLecturesByDate(){ return [...lectures].sort((a,b) => new Date(b.date.replace(" ","T")) - new Date(a.date.replace(" ","T"))); }
+function sortedDemandsByDate(){ return [...demands].sort((a,b) => new Date(b.date) - new Date(a.date)); }
+function lectureTopicClass(l){
+  if(l.status==="종료") return "past";
+  if(l.status==="신청 가능") return "current";
+  return "future";
+}
+
+function toggleApply(id){
+  const lec = lectureById(id);
+  if(lec.expired && !applied.has(id)){ toast("신청 기간이 지나 자료 접근 권한을 얻을 수 없습니다."); return; }
+  if(applied.has(id)){ applied.delete(id); toast("특강 신청이 취소되었습니다."); }
+  else { applied.add(id); toast("특강 참여 신청이 완료되었습니다. 이후 자료 열람 권한이 활성화됩니다."); }
+  render();
+}
+function openLecture(id){ currentLectureId = id; setView("lectureDetail"); }
+function openDemand(id){ currentDemandId = id; setView("demandDetail"); }
+function selectDay(day){ selectedDay = day; toast(`${day}요일이 선호 요일로 선택되었습니다.`); render(); }
+function toggleDemandVote(id){
+  const d = demandById(id);
+  if(voted.has(id)){ voted.delete(id); d.votes = Math.max(0,d.votes-1); toast("동의가 해제되었습니다."); }
+  else { voted.add(id); d.votes += 1; toast("동의가 반영되었습니다."); }
+  render();
+}
+
+/* ═══════════════════════════════════════
+   RENDER FUNCTIONS (구조 원본, 디자인만 교체)
+═══════════════════════════════════════ */
+
+function renderRecentNotice(){
+  return `
+  <div class="notice-box">
+    <div class="notice-box-header">
+      <span class="notice-box-title">과목공지</span>
+      <button class="notice-box-plus" onclick="setView('notices')">+</button>
+    </div>
+    <div class="notice-line" onclick="setView('noticeDetail')">
+      <span class="nl-dash">-</span>
+      <span class="nl-title">${notice.title}</span>
+      <span class="nl-date">${notice.date}</span>
+    </div>
+  </div>`;
+}
+
+function renderLectureActivities(){
+  const sorted = sortedLecturesByDate();
+  const applicable = sorted.filter(l => l.status === "신청 가능");
+  return `
+  ${applicable.length ? `
+  <div class="apply-box">
+    <div class="apply-box-header">신청 가능 특강</div>
+    <div class="apply-box-body">
+      ${applicable.map(l => `
+        <div class="lecture-item" style="padding-top:0;border-top:none">
+          ${getPosterSmall(l)}
+          <span class="act-icon ai-blue" style="font-size:10px;width:28px;height:28px">특강</span>
+          <div>
+            <a href="#" onclick="openLecture(${l.id})">${l.title}</a>
+            <div class="sub">
+              <span class="limit-label">신청</span>
+              ${l.date} · ${l.place} · ${l.speaker}<br>
+              ${l.desc}<br>
+              <span class="date-line">기간 내 신청한 학생은 특강 이후 자료와 녹화 기록을 열람할 수 있습니다.</span>
+            </div>
+          </div>
+          <button class="check-btn ${applied.has(l.id)?'checked':''}" onclick="toggleApply(${l.id})" title="특강 참여 신청"></button>
+        </div>
+      `).join("")}
+    </div>
+  </div>` : ""}
+
+  <div class="topic-section-wrap">
+    <div class="topic-header">
+      <div>
+        <h2>주제 별 학습 활동</h2>
+        <div class="sort-note">최근 특강이 위로 오도록 시간 역순으로 정렬됩니다.</div>
+      </div>
+      <select class="topic-filter"><option>전체</option><option>종료</option><option>신청 가능</option><option>예정</option></select>
+    </div>
+    ${sorted.map(l => `
+      <div class="topic-block ${lectureTopicClass(l)}">
+        <h3 class="topic-title">${l.title}</h3>
+        <div class="topic-meta-line">
+          <span class="date-badge">${l.date}</span>
+          <span>연사: ${l.speaker}</span>
+          <span>장소: ${l.place}</span>
+          <span class="status ${statusClass(l.status)}">${l.status}</span>
+        </div>
+        ${l.status !== "종료" ? `
+          <p class="red-note">※ 신청 체크박스를 누른 학생은 특강 이후 제공 자료와 녹화 기록을 열람할 수 있습니다.</p>
+          <p class="red-note">※ 기간 내 신청하지 않은 학생은 해당 특강의 사후 자료 열람 권한이 제한됩니다.</p>
+        ` : ""}
+        <div style="margin-top:12px">${lectureActivity(l.id)}</div>
+      </div>
+    `).join("")}
+  </div>`;
+}
+
+function lectureActivity(id){
+  const l = lectureById(id);
+  const isChecked = applied.has(id);
+  const disabled = l.expired && !isChecked;
+  const resText = isChecked ? "자료 열람 가능" : (disabled ? "신청 기간 종료" : "신청 후 자료 열람 가능");
+  return `
+  <div class="lecture-item">
+    ${getPosterSmall(l)}
+    <span class="act-icon ${l.status==='종료'?'ai-gray':'ai-blue'}" style="font-size:10px">특강</span>
+    <div>
+      <a href="#" onclick="openLecture(${id})">${l.title}</a>
+      <div class="sub">
+        <span class="limit-label ${l.expired?'ended':''}">${l.expired?'종료':'신청'}</span>
+        ${l.date} · ${l.place} · ${l.speaker}<br>
+        ${l.desc}<br>
+        <span class="${isChecked?'time-blue':'date-line'}">${resText}</span>
+      </div>
+    </div>
+    <button class="check-btn ${isChecked?'checked':''} ${disabled?'disabled':''}" onclick="toggleApply(${id})" title="특강 참여 신청"></button>
+  </div>`;
+}
+
+function renderHome(){
+  return `
+  ${renderRecentNotice()}
+  <div class="content-box">
+    <div class="block-title">강의 개요</div>
+    <div class="divider"></div>
+    <div class="activity-list" style="margin-top:0;margin-bottom:8px">
+      <div class="activity">
+        <span class="act-icon ai-purple">공지</span>
+        <div>
+          <a href="#" onclick="setView('notices')">학과 특강 목록</a>
+          <div class="sub">공지 목록에서 특강 시간 고정 안내와 개별 특강 공지를 확인합니다.</div>
+        </div>
+        <span class="status open">최근 공지</span>
+      </div>
+      <div class="activity">
+        <span class="act-icon ai-pink" style="font-size:10px">Q&A</span>
+        <div>
+          <a href="#" onclick="setView('demand')">특강 수요조사 게시판</a>
+          <div class="sub">원하는 특강 주제를 제안하거나 다른 학생의 제안에 동의합니다.</div>
+        </div>
+        <span class="status fixed">확정 1건</span>
+      </div>
+      <div class="activity">
+        <span class="act-icon ai-gray">일정</span>
+        <div>
+          <a href="#" onclick="setView('calendar')">특강 캘린더</a>
+          <div class="sub">학과 특강과 행사 일정을 시간표 형태로 확인합니다.</div>
+        </div>
+        <span class="status">6월</span>
+      </div>
+    </div>
+  </div>
+  ${renderLectureActivities()}`;
+}
+
+function renderNotices(){
+  return `${crumb("학과 특강 목록")}
+  <h1 class="page-title">학과 특강 목록</h1>
+  <div class="board-wrap">
+    <div class="board-info">전체 게시물수 : <b>4</b> &nbsp; 전체 페이지 : <span style="color:#22a06b">1 / 1</span></div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:70px">번호</th>
+          <th>제목</th>
+          <th style="width:120px">구분</th>
+          <th style="width:110px">작성자</th>
+          <th style="width:130px">작성일</th>
+          <th style="width:80px">조회수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>공지</td>
+          <td class="title"><a href="#" onclick="setView('noticeDetail')">${notice.title}</a></td>
+          <td><span class="course-tag fixed">고정</span></td>
+          <td>관리자</td><td>2026-06-02</td><td>312</td>
+        </tr>
+        ${sortedLecturesByDate().map((l,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td class="title">
+            <a href="#" onclick="openLecture(${l.id})">${l.title}</a>
+            <div style="color:#aaa;font-size:11.5px;margin-top:4px">${l.desc}</div>
+          </td>
+          <td><span class="course-tag ${l.status==='종료'?'past':''}">${l.status==='종료'?'지난특강':l.status==='예정'?'예정':'특강'}</span></td>
+          <td>관리자</td>
+          <td>${l.date.slice(0,10)}</td>
+          <td>${160-i*23}</td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+    <div class="right-actions">
+      <button class="btn" onclick="setView('home')">목록</button>
+      <button class="btn primary" onclick="setView('template')">쓰기</button>
+    </div>
+  </div>`;
+}
+
+function renderNoticeDetail(){
+  return `${crumb("학과 특강 목록")}
+  <h1 class="page-title">학과 특강 목록</h1>
+  <div class="article-box">
+    <div class="article-head">${notice.title}</div>
+    <div class="article-meta">
+      <span>작성자 : 관리자</span>
+      <span>작성일 : 2026-06-02 15:53 &nbsp;&nbsp; 조회수 : 312</span>
+    </div>
+    <div class="article-body">${notice.body}</div>
+  </div>
+  <div class="right-actions">
+    <button class="btn" onclick="setView('notices')">목록</button>
+    <div style="display:flex;gap:6px">
+      <button class="btn primary" onclick="setView('template')">쓰기</button>
+      <button class="btn">답변</button>
+    </div>
+  </div>`;
+}
+
+function renderLectureDetail(){
+  const l = lectureById(currentLectureId);
+  const hasAccess = applied.has(l.id);
+  const locked = l.expired && !hasAccess;
+  const careers = {
+    1:"스마일게이트 퓨처랩 및 아트센터 나비 창작 워크숍 운영, AI 기반 디자인 실험 프로젝트 진행",
+    2:"브랜드 리뉴얼, 공간 경험 설계, 전시 아이덴티티 구축 프로젝트 총괄",
+    3:"IT 플랫폼 프로덕트 기획, UX 정책 문서화, 데이터 기반 기능 개선 프로젝트 리드"
+  };
+  const fields  = {
+    1:"AI 디자인 / 창작 워크플로우 / 실무 도구 활용",
+    2:"브랜드 경험 / BX 디자인 / 포트폴리오 구조화",
+    3:"서비스 기획 / UX·UI 협업 / 산출물 커뮤니케이션"
+  };
+  return `${crumb(l.title)}
+  <h1 class="page-title">${l.title}</h1>
+  <div class="two-col">
+    <section class="content-box" style="padding:0">
+      <dl class="detail-grid">
+        <dt>연사</dt><dd>${l.speaker}</dd>
+        <dt>연사 경력</dt><dd>${careers[l.id]}</dd>
+        <dt>관련 분야</dt><dd>${fields[l.id]}</dd>
+        <dt>대상 학생</dt><dd>디자인 실무와 진로 탐색에 관심 있는 학생</dd>
+        <dt>일시</dt><dd>${l.date}</dd>
+        <dt>장소</dt><dd>${l.place}</dd>
+        <dt>신청 현황</dt><dd>${l.count}</dd>
+      </dl>
+      <div style="padding:20px 24px">
+        <div class="text-section">
+          <h3>특강에서 다룰 내용</h3>
+          <ul>
+            <li>${l.desc}</li>
+            <li>실무자가 프로젝트를 진행할 때 사용하는 판단 기준과 협업 방식을 소개합니다.</li>
+            <li>학생이 포트폴리오와 진로 탐색에 연결할 수 있는 관점을 제공합니다.</li>
+          </ul>
+        </div>
+        <div class="text-section">
+          <h3>자료 / 녹화 기록</h3>
+          ${hasAccess ? resourceOpenHtml(l) : resourceLockedHtml(l, locked)}
+        </div>
+        <div class="right-actions" style="padding:0;margin-top:18px">
+          <button class="btn" onclick="setView('home')">목록</button>
+          <div style="display:flex;gap:6px">
+            <button class="btn gray" onclick="toast('시간이 맞지 않는다는 응답이 기록되었습니다.')">시간 안 맞음</button>
+            <button class="btn primary" onclick="toggleApply(${l.id})">${hasAccess?'신청 취소':'신청 체크'}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="side-mini">
+      <div class="lecture-poster-side">${getPosterSVG(l.id)}</div>
+      <h3>특강 정보</h3>
+      <div class="stat-line"><span>상태</span><b><span class="status ${statusClass(l.status)}">${l.status}</span></b></div>
+      <div class="stat-line"><span>신청 인원</span><b>${l.count}</b></div>
+      <div class="stat-line"><span>신청 여부</span><b>${hasAccess?'신청 완료':'미신청'}</b></div>
+      <div class="stat-line"><span>자료 접근</span><b style="color:${hasAccess?'#0f7a43':'#e04040'}">${hasAccess?'가능':'제한'}</b></div>
+    </aside>
+  </div>`;
+}
+
+function resourceOpenHtml(l){
+  return `
+  <table class="resource-table">
+    <tr><td>자료 접근 상태</td><td class="green-cell">신청 완료 · 자료 열람 가능</td></tr>
+    <tr><td>강사 제공 자료</td><td><a class="file-link" href="#" onclick="toast('프로토타입 예시 파일입니다.')">특강_강의자료.pdf</a></td></tr>
+    <tr><td>녹화 기록</td><td><a class="file-link" href="#" onclick="toast('프로토타입 예시 녹화 기록입니다.')">특강 녹화 기록 보기</a></td></tr>
+    <tr><td>복기용 요약</td><td><a class="file-link" href="#" onclick="toast('프로토타입 예시 요약본입니다.')">핵심 내용 요약본</a></td></tr>
+  </table>`;
+}
+function resourceLockedHtml(l, locked){
+  const msg = locked ? "신청 기간이 지나 자료 접근 권한을 얻을 수 없습니다." : "신청 체크를 완료하면 특강 이후 자료와 녹화 기록을 열람할 수 있습니다.";
+  return `
+  <table class="resource-table">
+    <tr><td>자료 접근 상태</td><td class="red-cell">접근 제한</td></tr>
+    <tr><td>강사 제공 자료</td><td>신청자에게만 공개</td></tr>
+    <tr><td>녹화 기록</td><td>신청자에게만 공개</td></tr>
+  </table>
+  <div class="warning-box">${msg}<br>기간 내 신청하지 않은 학생은 해당 특강의 사후 자료 열람 기회를 잃게 됩니다.</div>`;
+}
+
+function renderDemand(){
+  return `${crumb("수요조사 게시판")}
+  <h1 class="page-title">특강 수요조사 게시판</h1>
+  <p style="font-size:13px;line-height:1.8;color:#666;margin:-8px 0 18px">
+    원하는 특강 주제를 자유롭게 제안하고, 다른 학생의 제안에 동의할 수 있는 게시판입니다.<br>
+    동의는 수요 확인을 위한 기능이며 실제 특강 신청과는 별도로 운영됩니다.
+  </p>
+  <div class="board-wrap">
+    <div class="board-info">전체 게시물수 : <b>${demands.length}</b> &nbsp; 전체 페이지 : <span style="color:#22a06b">1 / 1</span></div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:60px">번호</th>
+          <th>제목</th>
+          <th style="width:90px">상태</th>
+          <th style="width:80px">동의</th>
+          <th style="width:90px">작성자</th>
+          <th style="width:110px">작성일</th>
+          <th style="width:75px">조회수</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sortedDemandsByDate().map((d,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td class="title">
+            <a href="#" onclick="openDemand(${d.id})">${d.title}</a>
+            ${d.writer==="관리자" ? ' <span class="status admin" style="font-size:10.5px">관리자</span>' : ''}
+          </td>
+          <td><span class="status ${statusClass(d.status)}">${d.status}</span></td>
+          <td><b style="color:#2b6cd4">${d.votes}</b></td>
+          <td>${d.writer}</td>
+          <td>${d.date}</td>
+          <td>${d.views}</td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+    <div class="right-actions">
+      <button class="btn" onclick="setView('home')">목록</button>
+      <button class="btn primary" onclick="toast('새 수요 글 작성 화면으로 이동하는 예시입니다.')">쓰기</button>
+    </div>
+  </div>`;
+}
+
+function renderDemandDetail(){
+  const d = demandById(currentDemandId);
+  const isTimeVote = d.type === "timeVote";
+  return `${crumb("특강 수요조사 게시판")}
+  <h1 class="page-title">특강 수요조사 게시판</h1>
+  <div class="article-box">
+    <div class="article-head">${d.title} <span class="status ${statusClass(d.status)}" style="font-size:12px">${d.status}</span></div>
+    <div class="article-meta">
+      <span>작성자 : ${d.writer}</span>
+      <span>작성일 : ${d.date} 06:22 &nbsp; 조회수 : ${d.views}</span>
+    </div>
+    <div class="article-body">${d.body}</div>
+  </div>
+
+  ${isTimeVote ? `
+  <div class="vote-box">
+    <div style="font-size:13.5px;font-weight:700;color:#444;margin-bottom:10px">요일별 선호 시간 투표 결과</div>
+    ${renderFixedTimeResults()}
+  </div>
+  ` : `
+  <div class="vote-box">
+    <div class="vote-layout">
+      <div>
+        <button class="btn agree ${voted.has(d.id)?'on':''}" onclick="toggleDemandVote(${d.id})">${voted.has(d.id)?'동의 해제':'동의'}</button>
+        <div style="margin-top:18px;font-size:13px;font-weight:700;color:#555">선호 요일</div>
+        <div class="vote-days">
+          ${["월","화","수","목","금"].map(day => `<button class="vote-day ${selectedDay===day?'selected':''}" onclick="selectDay('${day}')">${day}</button>`).join("")}
+          <span style="color:#aaa;font-size:12px">(토·일 제외)</span>
+        </div>
+        <div style="font-size:13px;color:#666">현재 동의 수 : <b style="color:#2b6cd4">${d.votes}</b>명 · 선택한 선호 요일 : <b>${selectedDay}요일</b></div>
+      </div>
+      ${renderVoteChart()}
+    </div>
+  </div>
+  `}
+
+  <div class="right-actions" style="padding:0;margin-bottom:14px">
+    <button class="btn" onclick="setView('demand')">목록</button>
+    <div style="display:flex;gap:6px">
+      <button class="btn primary" onclick="toast('답변 작성 화면으로 이동하는 예시입니다.')">쓰기</button>
+      <button class="btn">답변</button>
+    </div>
+  </div>
+
+  ${d.comments.map(c => `
+  <div class="comment-box">
+    <div class="comment-avatar">${c[0]==='관리자'?'관':'익'}</div>
+    <div>
+      <div class="comment-name">${c[0]}</div>
+      <div class="comment-text">${c[1]}</div>
+    </div>
+    <button class="btn small">답글</button>
+  </div>`).join("")}`;
+}
+
+
+function posterClass(id){
+  if(id===1) return "poster-ai";
+  if(id===2) return "poster-brand";
+  return "poster-service";
+}
+function posterTitle(id){
+  if(id===1) return "AI 활용과<br>디자인 실무";
+  if(id===2) return "브랜드 경험<br>포트폴리오";
+  return "서비스 기획<br>디자인 협업";
+}
+function posterDateShort(l){
+  const m = l.date.match(/2026-(\d\d)-(\d\d)\s+(\d\d):(\d\d)/);
+  if(!m) return l.date;
+  return `${m[1]}.${m[2]} · ${m[3]}:${m[4]}`;
+}
+function posterHtml(l, side=false){
+  return `
+    <div class="${side ? 'lecture-poster-side' : 'poster-slot'} ${posterClass(l.id)}">
+      <div class="poster-kicker">통합디자인학과 진로 특강</div>
+      <div class="poster-title">${posterTitle(l.id)}</div>
+      <div class="poster-date">${posterDateShort(l)}</div>
+    </div>`;
+}
+
+function renderFixedTimeResults(){
+  return `
+  <div class="time-result-grid">
+    ${["월","화","수","목","금"].map(day => {
+      const rows = fixedTimeResults[day];
+      const maxVote = Math.max(...rows.map(r => r[1]));
+      return `
+      <div class="time-result-card">
+        <h4>${day}요일</h4>
+        ${rows.map((r,idx) => `
+          <div class="time-result-row ${idx===0?'top':''}">
+            <span>${r[0]}</span>
+            <div class="time-result-bg"><div class="time-result-fill" style="width:${(r[1]/maxVote)*100}%"></div></div>
+            <span>${r[1]}</span>
+          </div>
+        `).join("")}
+      </div>`;
+    }).join("")}
+  </div>
+  <div class="closed-note">투표 종료 · 결과 반영: 월 14시 / 화 11시 / 수 14시 / 목 14시 / 금 14시</div>`;
+}
+
+function renderVoteChart(){
+  const maxVote = Math.max(...Object.values(dayVotes));
+  return `
+  <div class="vote-chart">
+    <div class="vote-chart-title">요일 투표 현황</div>
+    ${["월","화","수","목","금"].map(day => `
+      <div class="vote-bar-row ${selectedDay===day?'selected':''}">
+        <span class="vote-label">${day}</span>
+        <div class="vote-bar-bg"><div class="vote-bar-fill" style="width:${(dayVotes[day]/maxVote)*100}%"></div></div>
+        <span>${dayVotes[day]}</span>
+      </div>
+    `).join("")}
+  </div>`;
+}
+
+
+function renderMonthCalendar(){
+  const dow = ["일","월","화","수","목","금","토"];
+  const lectureEvents = {
+    10:[{title:"AI 활용 디자인", cls:"", id:1}],
+    17:[{title:"브랜드 포트폴리오 전략", cls:"brand", id:2}],
+    22:[{title:"서비스 기획자와 디자이너의 협업 방식", cls:"done", id:3}]
+  };
+  const fixedDays = {};
+  let html = `<div class="month-grid">`;
+  html += dow.map((d,i)=>`<div class="month-dow ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join("");
+  html += `<div class="month-cell empty"></div>`;
+  for(let day=1; day<=30; day++){
+    const index = day % 7;
+    const dayCls = index===0 ? "sun" : index===6 ? "sat" : "";
+    html += `<div class="month-cell">
+      <div class="month-day ${dayCls}">${day}</div>
+      ${fixedDays[day] ? `<span class="month-event fixed">${fixedDays[day]}</span>` : ``}
+      ${(lectureEvents[day]||[]).map(ev=>`<span class="month-event ${ev.cls}" onclick="openLecture(${ev.id})">${ev.title}</span>`).join("")}
+    </div>`;
+  }
+  html += `<div class="month-cell empty"></div><div class="month-cell empty"></div><div class="month-cell empty"></div><div class="month-cell empty"></div>`;
+  html += `</div>`;
+  return html;
+}
+
+function renderCalendar(){
+  const days=["월","화","수","목","금"];
+  const times=["11:00","14:00","16:00"];
+  const events={
+    "월-14:00":"고정 특강 가능 시간",
+    "화-11:00":"고정 특강 가능 시간",
+    "수-14:00":"고정 특강 가능 시간",
+    "목-14:00":"고정 특강 가능 시간",
+    "금-14:00":"고정 특강 가능 시간"
+  };
+  return `${crumb("특강 캘린더")}
+  <h1 class="page-title">특강 캘린더</h1>
+  <div class="content-box">
+    <h2 class="block-title">이번 학기 특강 시간표</h2>
+    <div class="calendar-simple">
+      <div class="cal-head"></div>
+      ${days.map(d=>`<div class="cal-head">${d}</div>`).join("")}
+      ${times.map(t=>`
+        <div class="cal-time">${t}</div>
+        ${days.map(d=>`<div class="cal-cell">${events[`${d}-${t}`]?`<span class="cal-event ${events[`${d}-${t}`].includes('고정')?'green':''}">${events[`${d}-${t}`]}</span>`:''}</div>`).join("")}
+      `).join("")}
+    </div>
+    <p style="margin-top:14px;color:#666;line-height:1.7;font-size:13px">
+      월요일 14시, 화요일 11시, 수요일 14시, 목요일 14시, 금요일 14시는 학기 초 고정 시간 선호 조사 결과를 반영한 특강 가능 시간입니다.
+    </p>
+
+    <div class="month-calendar-wrap">
+      <div class="month-cal-head">
+        <h3>2026년 6월 특강 달력</h3>
+        <span class="month-cal-note">확정된 특강 일정을 날짜별로 확인합니다.</span>
+      </div>
+      ${renderMonthCalendar()}
+    </div>
+  </div>`;
+}
+
+function renderTemplate(){
+  return `${crumb("특강 공지 작성")}
+  <h1 class="page-title">특강 공지 작성</h1>
+  <div class="content-box" style="padding:0">
+    <dl class="form-grid">
+      <label>특강 제목</label><div class="field"><input value="AI 활용 디자인: What's Your Vibe?"></div>
+      <label>연사</label><div class="field"><input value="소재환 Creativity Sparker"></div>
+      <label>연사 경력</label><div class="field"><input value="스마일게이트 퓨처랩 및 아트센터 나비 창작 워크숍 운영"></div>
+      <label>관련 분야</label><div class="field"><input value="AI 디자인 / 창작 워크플로우 / 실무 도구 활용"></div>
+      <label>일시</label><div class="field"><input value="2026-06-10 16:00"></div>
+      <label>장소</label><div class="field"><input value="생활과학관 201호"></div>
+      <label>내용</label><div class="field"><textarea>AI 시대에 디자이너가 도구를 해석하고 자신의 작업 언어를 만드는 방법을 실습 중심으로 다룹니다.</textarea></div>
+      <label>추천 대상</label><div class="field"><textarea>AI 도구를 디자인 과정에 적용해보고 싶거나, 자신만의 창작 워크플로우를 정리하고 싶은 학생</textarea></div>
+    </dl>
+    <div class="right-actions">
+      <button class="btn" onclick="setView('admin')">취소</button>
+      <button class="btn primary" onclick="toast('특강 공지가 등록되었습니다.')">등록</button>
+    </div>
+  </div>`;
+}
+
+function renderAdmin(){
+  return `${crumb("수요 글 관리")}
+  <h1 class="page-title">수요 글 관리</h1>
+  <div class="board-wrap">
+    <div class="board-info">관리 대상 게시물수 : <b>${demands.length}</b></div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:70px">번호</th>
+          <th>수요 주제</th>
+          <th style="width:100px">동의</th>
+          <th style="width:110px">상태</th>
+          <th style="width:120px">관리</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sortedDemandsByDate().map((d,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td class="title"><a href="#" onclick="openDemand(${d.id})">${d.title}</a></td>
+          <td><b style="color:#2b6cd4">${d.votes}</b></td>
+          <td><span class="status ${statusClass(d.status)}">${d.status}</span></td>
+          <td><button class="btn small" onclick="toast('상태 변경: 검토 중 → 섭외 중 → 확정')">상태 변경</button></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+    <div class="right-actions">
+      <button class="btn" onclick="setView('home')">목록</button>
+      <button class="btn primary" onclick="setView('template')">특강 공지 작성</button>
+    </div>
+  </div>`;
+}
+
+
+function getPosterSVG(id){
+  const posters = {
+    1:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+      <defs>
+        <linearGradient id="aiBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#180b3d"/><stop offset="55%" stop-color="#4c1d95"/><stop offset="100%" stop-color="#111827"/></linearGradient>
+        <linearGradient id="aiTx" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+      </defs>
+      <rect width="400" height="560" fill="url(#aiBg)"/>
+      <circle cx="330" cy="80" r="90" fill="#7c3aed" opacity=".28"/>
+      <circle cx="70" cy="360" r="120" fill="#2563eb" opacity=".16"/>
+      <path d="M35 260 C120 190, 240 330, 370 245" stroke="#a78bfa" stroke-width="3" fill="none" opacity=".65"/>
+      <text x="28" y="72" font-size="34" font-weight="900" fill="url(#aiTx)">AI시대</text>
+      <text x="28" y="113" font-size="30" font-weight="900" fill="url(#aiTx)">디자이너의</text>
+      <text x="28" y="154" font-size="34" font-weight="900" fill="url(#aiTx)">역할</text>
+      <text x="28" y="190" font-size="15" font-weight="700" fill="#e9d5ff">What's Your Vibe?</text>
+      <line x1="28" y1="230" x2="372" y2="230" stroke="#c4b5fd" opacity=".28"/>
+      <text x="28" y="270" font-size="15" fill="#ddd6fe">소재환 Creativity Sparker</text>
+      <text x="28" y="294" font-size="12" fill="#c4b5fd">Smilegate Future Lab / Art Center Nabi</text>
+      <text x="28" y="350" font-size="13" font-weight="700" fill="#93c5fd">KEY POINT</text>
+      <text x="28" y="378" font-size="12" fill="#ddd6fe">• AI 도구와 디자이너의 판단 기준</text>
+      <text x="28" y="400" font-size="12" fill="#ddd6fe">• 창작 워크플로우 실습</text>
+      <text x="28" y="422" font-size="12" fill="#ddd6fe">• 나만의 작업 언어 찾기</text>
+      <text x="28" y="506" font-size="14" font-weight="800" fill="#fff">2026.06.10 WED 16:00</text>
+      <text x="28" y="530" font-size="12" fill="#c4b5fd">생활과학관 201호</text>
+    </svg>`,
+    2:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+      <defs>
+        <linearGradient id="brBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b0764"/><stop offset="52%" stop-color="#be185d"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
+        <linearGradient id="brSoft" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fce7f3"/></linearGradient>
+      </defs>
+      <rect width="400" height="560" fill="url(#brBg)"/>
+      <rect x="34" y="36" width="332" height="488" rx="18" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.28)"/>
+      <circle cx="305" cy="138" r="64" fill="#fbbf24" opacity=".35"/>
+      <circle cx="82" cy="420" r="88" fill="#f9a8d4" opacity=".22"/>
+      <text x="54" y="98" font-size="23" font-weight="900" fill="url(#brSoft)">BRAND</text>
+      <text x="54" y="136" font-size="35" font-weight="900" fill="#fff">경험 설계와</text>
+      <text x="54" y="179" font-size="31" font-weight="900" fill="#fff">포트폴리오</text>
+      <text x="54" y="214" font-size="16" font-weight="700" fill="#ffedd5">BX Portfolio Strategy</text>
+      <line x1="54" y1="258" x2="346" y2="258" stroke="rgba(255,255,255,.28)"/>
+      <text x="54" y="298" font-size="15" fill="#fff7ed">박서윤 BX 크리에이티브 디렉터</text>
+      <text x="54" y="324" font-size="12" fill="#fed7aa">브랜드 리뉴얼 · 공간 경험 · 전시 아이덴티티</text>
+      <text x="54" y="378" font-size="13" font-weight="800" fill="#fff7ed">이런 학생에게 추천</text>
+      <text x="54" y="406" font-size="12" fill="#ffedd5">• 브랜드 프로젝트 정리가 어려운 학생</text>
+      <text x="54" y="428" font-size="12" fill="#ffedd5">• 포트폴리오 스토리라인이 필요한 학생</text>
+      <text x="54" y="505" font-size="14" font-weight="800" fill="#fff">2026.06.17 WED 14:00</text>
+      <text x="54" y="530" font-size="12" fill="#ffedd5">생활과학관 301호</text>
+    </svg>`,
+    3:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" style="width:100%;display:block">
+      <defs>
+        <linearGradient id="svBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#052e2b"/><stop offset="55%" stop-color="#0f766e"/><stop offset="100%" stop-color="#134e4a"/></linearGradient>
+      </defs>
+      <rect width="400" height="560" fill="url(#svBg)"/>
+      <path d="M0 128 H400" stroke="#5eead4" stroke-width="2" opacity=".25"/>
+      <path d="M0 266 H400" stroke="#5eead4" stroke-width="2" opacity=".18"/>
+      <path d="M0 404 H400" stroke="#5eead4" stroke-width="2" opacity=".18"/>
+      <rect x="44" y="64" width="312" height="150" rx="16" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)"/>
+      <text x="64" y="112" font-size="30" font-weight="900" fill="#ccfbf1">서비스 기획자와</text>
+      <text x="64" y="154" font-size="30" font-weight="900" fill="#ccfbf1">디자이너의</text>
+      <text x="64" y="196" font-size="34" font-weight="900" fill="#99f6e4">협업 방식</text>
+      <text x="44" y="266" font-size="15" fill="#ccfbf1">김도현 IT 플랫폼 서비스 기획자</text>
+      <text x="44" y="292" font-size="12" fill="#99f6e4">Product Planning · UX Policy · Data Review</text>
+      <circle cx="92" cy="368" r="28" fill="#99f6e4" opacity=".75"/>
+      <circle cx="200" cy="368" r="28" fill="#5eead4" opacity=".55"/>
+      <circle cx="308" cy="368" r="28" fill="#2dd4bf" opacity=".45"/>
+      <line x1="120" y1="368" x2="172" y2="368" stroke="#ccfbf1" stroke-width="3" opacity=".8"/>
+      <line x1="228" y1="368" x2="280" y2="368" stroke="#ccfbf1" stroke-width="3" opacity=".8"/>
+      <text x="44" y="438" font-size="13" font-weight="800" fill="#ccfbf1">사후 자료 공개 완료</text>
+      <text x="44" y="466" font-size="12" fill="#ccfbf1">• 요구사항 정리와 화면 설계 산출물</text>
+      <text x="44" y="488" font-size="12" fill="#ccfbf1">• 기획자-디자이너 커뮤니케이션 방식</text>
+      <text x="44" y="526" font-size="14" font-weight="800" fill="#fff">2026.05.22 FRI 14:00</text>
+    </svg>`
+  };
+  return posters[id] || posters[1];
+}
+function getPosterSmall(l){
+  return '<div style="width:108px;min-height:148px;overflow:hidden;border-radius:6px;flex-shrink:0;box-shadow:0 2px 7px rgba(30,50,80,.10)">'+getPosterSVG(l.id)+'</div>';
+}
+
+function render(){
+  const app = document.getElementById("app");
+  if(view==="home")          app.innerHTML = renderHome();
+  if(view==="notices")       app.innerHTML = renderNotices();
+  if(view==="noticeDetail")  app.innerHTML = renderNoticeDetail();
+  if(view==="lectureDetail") app.innerHTML = renderLectureDetail();
+  if(view==="demand")        app.innerHTML = renderDemand();
+  if(view==="demandDetail")  app.innerHTML = renderDemandDetail();
+  if(view==="calendar")      app.innerHTML = renderCalendar();
+  if(view==="template")      app.innerHTML = renderTemplate();
+  if(view==="admin")         app.innerHTML = renderAdmin();
+}
+render();
+</script>
+</body>
+</html>
